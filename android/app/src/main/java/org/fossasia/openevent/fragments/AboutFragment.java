@@ -1,30 +1,30 @@
 package org.fossasia.openevent.fragments;
 
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.LinearLayout;
 import com.squareup.otto.Subscribe;
 
 import org.fossasia.openevent.OpenEventApp;
@@ -45,6 +45,10 @@ import org.fossasia.openevent.utils.DateConverter;
 import org.fossasia.openevent.utils.Utils;
 import org.fossasia.openevent.utils.Views;
 import org.threeten.bp.format.DateTimeParseException;
+
+import android.view.animation.LinearInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.TranslateAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +87,9 @@ public class AboutFragment extends BaseFragment {
     protected TextView bookmarkHeader;
     @BindView(R.id.event_details_header)
     protected TextView eventDetailsHeader;
+    @BindView(R.id.slidin_down_part)
+    protected LinearLayout slidin_down_part;
+
 
     private ArrayList<String> dateList = new ArrayList<>();
 
@@ -183,18 +190,31 @@ public class AboutFragment extends BaseFragment {
 
     @TargetApi(16)
     void collapseExpandTextView() {
+        TranslateAnimation a  = new TranslateAnimation(0,0,-eventDescription.getHeight(),0);
+        a.setInterpolator(new LinearInterpolator());
+        a.setDuration(300);
+
+        TranslateAnimation b  = new TranslateAnimation(0,0,eventDescription.getHeight(),0);
+        b.setInterpolator(new LinearInterpolator());
+        b.setDuration(300);
+
+        AlphaAnimation a1 = new AlphaAnimation(0,1);
+        AlphaAnimation a2 = new AlphaAnimation(1,0);
+
         if (eventDescription.getVisibility() == View.GONE) {
-            // it's collapsed - expand it
+            // it's collapsed - expand it.
+            slidin_down_part.startAnimation(a);
+            eventDescription.startAnimation(a1);
             eventDescription.setVisibility(View.VISIBLE);
             descriptionImg.setImageResource(R.drawable.ic_expand_less_black_24dp);
+
         } else {
-            // it's expanded - collapse it
+            // it's expanded - collapse it.
+            slidin_down_part.startAnimation(b);
+            eventDescription.startAnimation(a2);
             eventDescription.setVisibility(View.GONE);
             descriptionImg.setImageResource(R.drawable.ic_expand_more_black_24dp);
         }
-
-        ObjectAnimator animation = ObjectAnimator.ofInt(eventDescription, "maxLines", eventDescription.getMaxLines());
-        animation.setDuration(200).start();
     }
 
     @Override

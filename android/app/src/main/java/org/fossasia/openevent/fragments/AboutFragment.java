@@ -98,7 +98,7 @@ public class AboutFragment extends BaseFragment {
     private RealmResults<Session> bookmarksResult;
     private List<Object> sessions = new ArrayList<>();
     private List<SocialLink> socialLinks = new ArrayList<>();
-
+//
     private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
     private Event event;
 

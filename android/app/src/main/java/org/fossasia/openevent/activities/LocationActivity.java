@@ -1,5 +1,6 @@
 package org.fossasia.openevent.activities;
 
+<<<<<<< HEAD
 import android.app.Dialog;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -8,6 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.DrawableCompat;
+=======
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+>>>>>>> text_align
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,8 +29,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import com.amulyakhare.textdrawable.TextDrawable;
 
+=======
+>>>>>>> text_align
 import org.fossasia.openevent.OpenEventApp;
 import org.fossasia.openevent.R;
 import org.fossasia.openevent.adapters.SessionsListAdapter;
@@ -38,6 +48,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+<<<<<<< HEAD
+=======
+import io.reactivex.disposables.CompositeDisposable;
+>>>>>>> text_align
 
 /**
  * User: MananWason
@@ -51,10 +65,15 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
     private final String FRAGMENT_TAG_LOCATION = "FTAGR";
 
     private GridLayoutManager gridLayoutManager;
+<<<<<<< HEAD
     private Dialog upcomingDialogBox;
 
     private List<Session> sessions = new ArrayList<>();
 
+=======
+
+    private List<Session> mSessions = new ArrayList<>();
+>>>>>>> text_align
     private static final int locationWiseSessionList = 1;
 
     @BindView(R.id.recyclerView_locations)
@@ -68,7 +87,7 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
 
     private String location;
 
-    private String searchText = "";
+    private String searchText;
 
     private SearchView searchView;
     private Menu menu;
@@ -78,11 +97,16 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
     private TextView upcomingSessionTitle;
     private TextDrawable.IBuilder drawableBuilder = TextDrawable.builder().round();
 
+    private CompositeDisposable disposable;
+    private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setUpcomingSessionsDialog();
+
+        disposable = new CompositeDisposable();
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -97,7 +121,11 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
     protected void onResume() {
         super.onResume();
 
+<<<<<<< HEAD
         location = getIntent().getStringExtra(ConstantStrings.LOCATION_NAME);
+=======
+        location = getIntent().getStringExtra(ConstantStrings.MICROLOCATIONS);
+>>>>>>> text_align
         toolbar.setTitle(location);
 
         //setting the grid layout to cut-off white space in tablet view
@@ -108,11 +136,16 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
         sessionRecyclerView.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(this, spanCount);
         sessionRecyclerView.setLayoutManager(gridLayoutManager);
+<<<<<<< HEAD
         sessionsListAdapter = new SessionsListAdapter(this, sessions, locationWiseSessionList);
+=======
+        sessionsListAdapter = new SessionsListAdapter(this, mSessions, locationWiseSessionList);
+>>>>>>> text_align
         sessionRecyclerView.setAdapter(sessionsListAdapter);
         sessionRecyclerView.scrollToPosition(SessionsListAdapter.listPosition);
         sessionRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+<<<<<<< HEAD
         loadData();
 
         handleVisibility();
@@ -178,6 +211,22 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
 
     private void handleVisibility() {
         if (!sessions.isEmpty()) {
+=======
+        realmRepo.getSessionsByLocation(location)
+                .addChangeListener((sessions, orderedCollectionChangeSet) -> {
+                    mSessions.clear();
+                    mSessions.addAll(sessions);
+                    sessionsListAdapter.notifyDataSetChanged();
+
+                    handleVisibility();
+                });
+
+        handleVisibility();
+    }
+
+    private void handleVisibility () {
+        if (!mSessions.isEmpty()) {
+>>>>>>> text_align
             noSessionsView.setVisibility(View.GONE);
             sessionRecyclerView.setVisibility(View.VISIBLE);
         } else {
@@ -200,16 +249,62 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(disposable != null && !disposable.isDisposed())
+            disposable.dispose();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_location_activity, menu);
         searchView = (SearchView) menu.findItem(R.id.action_search_tracks_location).getActionView();
+<<<<<<< HEAD
         DrawableCompat.setTint(menu.findItem(R.id.action_search_tracks_location).getIcon(), Color.WHITE);
         DrawableCompat.setTint(menu.findItem(R.id.action_map_location).getIcon(), Color.WHITE);
+=======
+>>>>>>> text_align
         searchView.setOnQueryTextListener(this);
         searchView.setQuery(searchText, false);
         return true;
+    }
+    @Override
+    public void onBackPressed(){
+        if((mSessions.isEmpty())){
+            noSessionsView.setVisibility(View.VISIBLE);
+        }
+        super.onBackPressed();
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_map_location:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame_location, ((OpenEventApp) getApplication()).getMapModuleFactory().provideMapModule().provideMapFragment(), FRAGMENT_TAG_LOCATION).addToBackStack(null).commit();
+                sessionRecyclerView.setVisibility(View.GONE);
+                noSessionsView.setVisibility(View.GONE);
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                getSupportFragmentManager().popBackStack();
+                sessionRecyclerView.setVisibility(View.VISIBLE);
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        float width = displayMetrics.widthPixels / displayMetrics.density;
+        int spanCount = (int) (width / 250.00);
+        gridLayoutManager.setSpanCount(spanCount);
     }
 
     @Override
@@ -224,6 +319,7 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
 
     }
 
+<<<<<<< HEAD
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_map_location:
@@ -279,5 +375,37 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
         sessionsListAdapter.filter(searchText);
 
         return false;
+=======
+    @Override
+    public boolean onQueryTextChange(final String query) {
+        realmRepo.getSessionsByLocation(location)
+                .addChangeListener((sessions, orderedCollectionChangeSet) -> {
+                    mSessions.clear();
+                    mSessions.addAll(sessions);
+
+                    final List<Session> filteredModelList = filter(mSessions,
+                            query.toLowerCase(Locale.getDefault()));
+                    sessionsListAdapter.notifyDataSetChanged();
+                    sessionsListAdapter.animateTo(filteredModelList);
+                    sessionRecyclerView.scrollToPosition(0);
+
+                    searchText = query;
+                });
+
+        return false;
+    }
+
+    private List<Session> filter(List<Session> sessions, String query) {
+        String queryLowerCase = query.toLowerCase(Locale.getDefault());
+
+        final List<Session> filteredTracksList = new ArrayList<>();
+        for (Session session : sessions) {
+            final String text = session.getTitle().toLowerCase(Locale.getDefault());
+            if (text.contains(queryLowerCase)) {
+                filteredTracksList.add(session);
+            }
+        }
+        return filteredTracksList;
+>>>>>>> text_align
     }
 }

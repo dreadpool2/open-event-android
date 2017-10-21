@@ -1,5 +1,6 @@
 package org.fossasia.openevent.utils;
 
+<<<<<<< HEAD
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,15 @@ public class Utils {
 
     private static boolean isTwoPane = false;
 
+=======
+import android.support.v4.widget.SwipeRefreshLayout;
+
+import org.fossasia.openevent.OpenEventApp;
+import org.fossasia.openevent.api.Urls;
+
+public class Utils {
+
+>>>>>>> text_align
     public static boolean isEmpty(String string) {
         return string == null || string.trim().length() == 0;
     }
@@ -32,6 +42,7 @@ public class Utils {
         return finalString;
     }
 
+<<<<<<< HEAD
     public static float pxToDp(float px) {
         return px / Resources.getSystem().getDisplayMetrics().density;
     }
@@ -40,10 +51,13 @@ public class Utils {
         return dp * Resources.getSystem().getDisplayMetrics().density;
     }
 
+=======
+>>>>>>> text_align
     public static boolean isBaseUrlEmpty(){
         return Urls.getBaseUrl().equals(Urls.EMPTY_LINK);
     }
 
+<<<<<<< HEAD
     public static boolean isEmailValid(String email){
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         Matcher matcher = pattern.matcher(email);
@@ -55,6 +69,8 @@ public class Utils {
         return password.length() >= 6;
     }
 
+=======
+>>>>>>> text_align
     public static void registerIfUrlValid(SwipeRefreshLayout swipeRefreshLayout,
                                               Object object, SwipeRefreshLayout.OnRefreshListener onRefreshListener){
         if (isBaseUrlEmpty()) {
@@ -71,6 +87,7 @@ public class Utils {
         }
     }
 
+<<<<<<< HEAD
     public static String getNameLetters(String name) {
         if (isEmpty(name))
             return "#";
@@ -87,6 +104,8 @@ public class Utils {
         return nameLetters.toString().toUpperCase();
     }
 
+=======
+>>>>>>> text_align
     public static String parseImageUri(String uri) {
         if(isEmpty(uri))
             return null;
@@ -100,6 +119,7 @@ public class Utils {
         return null;
     }
 
+<<<<<<< HEAD
     public static void setTwoPane(boolean value) {
         isTwoPane = value;
     }
@@ -177,4 +197,6 @@ public class Utils {
     private static String getSocialLinkHostName(String name) {
         return String.valueOf(name + ".com").toLowerCase();
     }
+=======
+>>>>>>> text_align
 }

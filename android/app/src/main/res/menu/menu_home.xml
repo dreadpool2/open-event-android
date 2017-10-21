@@ -8,6 +8,7 @@
         android:id="@+id/action_search_home"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/search"
+<<<<<<< HEAD
         app:showAsAction="always" />
 
     <item
@@ -21,4 +22,8 @@
     <item
         android:title="Call For Speakers"
         android:id="@+id/action_display_speakers_call_dialog"/>
+=======
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+>>>>>>> text_align
 </menu>

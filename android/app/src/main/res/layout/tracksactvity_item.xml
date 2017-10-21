@@ -105,6 +105,7 @@
 
                     <TextView
                         android:id="@+id/session_speaker"
+<<<<<<< HEAD
                         android:layout_width="@dimen/card_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="fill"
@@ -119,6 +120,15 @@
                         android:id="@+id/session_status"
                         android:layout_marginLeft="@dimen/session_status_margin"
                         android:textStyle="bold" />
+=======
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/layout_margin_large"
+                        android:layout_marginStart="@dimen/layout_margin_large"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text_size_large"
+                        tools:text="Speaker" />
+>>>>>>> text_align
                 </LinearLayout>
 
                 <LinearLayout

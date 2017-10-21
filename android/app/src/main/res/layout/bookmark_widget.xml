@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     android:orientation="vertical">
 
+=======
+    android:orientation="vertical"
+    >
+
+
+>>>>>>> text_align
     <RelativeLayout
         android:id="@+id/widget"
         android:layout_width="match_parent"
@@ -31,7 +38,10 @@
             android:layout_toRightOf="@+id/bookmark_image"
             android:layout_toEndOf="@+id/bookmark_image"
             android:text="@string/bookmarks"
+<<<<<<< HEAD
             android:textColor="@color/white"
+=======
+>>>>>>> text_align
             style="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
 
     </RelativeLayout>
@@ -46,9 +56,14 @@
             android:id="@+id/widget_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+<<<<<<< HEAD
             android:paddingTop="@dimen/padding_medium"
             android:padding="@dimen/padding_medium"
             android:divider="@color/grey"
+=======
+            android:divider="@null"
+            android:paddingTop="@dimen/padding_medium"
+>>>>>>> text_align
             android:dividerHeight="@dimen/bookmark_divider_height"
             tools:listitem="@layout/widget_list_item" />
 

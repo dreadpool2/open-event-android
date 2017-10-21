@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 # GCE Kubernetes
 
 
 ## Mode 1 - Dependent on API Server Kubernetes deployment
+=======
+---
+title: GCE Kubernetes
+---
+
+# Mode 1 - Dependent on API Server Kubernetes deployment
+>>>>>>> text_align
 
 - Follow all steps at https://github.com/fossasia/open-event-orga-server/blob/nextgen/docs/installation/gce-kubernetes.md (Ensure you use the config in the `nextgen` branch)
 - Now switch back to this repository. (open-event-android)
@@ -14,7 +22,11 @@
     ```
 - Once deployed, your instance will be accessible at your domain name.
 
+<<<<<<< HEAD
 ## Mode 2 - Standalone deployment
+=======
+# Mode 2 - Standalone deployment
+>>>>>>> text_align
 
 > Note: this mode is untested.
 
@@ -72,4 +84,8 @@
     kubectl get ingress --namespace web android-generator-notls
     ```
 - Wait for a few mins (5-10m) before you move on to the next step.    
+<<<<<<< HEAD
 - The generator will be accessible at the above mentioned IP address.
+=======
+- The generator will be accessible at the above mentioned IP address.
+>>>>>>> text_align

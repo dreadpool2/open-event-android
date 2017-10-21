@@ -4,7 +4,10 @@ import shutil
 import zipfile
 import os
 from tempfile import mkstemp
+<<<<<<< HEAD
 from xml.etree import cElementTree as ElementTree
+=======
+>>>>>>> text_align
 
 import bleach
 import hashlib

@@ -2,12 +2,17 @@ package org.fossasia.openevent.activities;
 
 import android.content.res.Configuration;
 import android.graphics.Color;
+<<<<<<< HEAD
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+=======
+import android.os.Build;
+import android.os.Bundle;
+>>>>>>> text_align
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,11 +37,15 @@ import org.fossasia.openevent.data.Track;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.events.BookmarkChangedEvent;
 import org.fossasia.openevent.utils.ConstantStrings;
+<<<<<<< HEAD
 import org.fossasia.openevent.utils.DateConverter;
 import org.fossasia.openevent.utils.DateService;
 import org.fossasia.openevent.utils.Utils;
 import org.fossasia.openevent.utils.Views;
 import org.threeten.bp.ZonedDateTime;
+=======
+import org.fossasia.openevent.utils.Views;
+>>>>>>> text_align
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +67,16 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
 
     private GridLayoutManager gridLayoutManager;
 
+<<<<<<< HEAD
     private List<Session> sessions = new ArrayList<>();
 
     private String searchText = "";
     private int fontColor;
+=======
+    private List<Session> mSessions = new ArrayList<>();
+
+    private String searchText;
+>>>>>>> text_align
 
     private SearchView searchView;
     private Menu menu;
@@ -76,12 +91,26 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
 
     private int ongoingPosition, upcomingPosition, flag;
 
+<<<<<<< HEAD
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recyclerView)
     RecyclerView sessionsRecyclerView;
     @BindView(R.id.txt_no_sessions)
     TextView noSessionsView;
+=======
+    private static final int trackWiseSessionList = 4;
+    private int trackId;
+
+    private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
+    private Track track;
+
+    private ActionBar actionBar;
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recyclerView) RecyclerView sessionsRecyclerView;
+    @BindView(R.id.txt_no_sessions) TextView noSessionsView;
+>>>>>>> text_align
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +121,11 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
         String track = getIntent().getStringExtra(ConstantStrings.TRACK);
 
         actionBar = getSupportActionBar();
+<<<<<<< HEAD
         if (actionBar != null) {
+=======
+        if(actionBar != null) {
+>>>>>>> text_align
             actionBar.setDisplayHomeAsUpEnabled(true);
             if (!TextUtils.isEmpty(track))
                 actionBar.setTitle(track);
@@ -109,7 +142,14 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
         sessionsRecyclerView.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(this, spanCount);
         sessionsRecyclerView.setLayoutManager(gridLayoutManager);
+<<<<<<< HEAD
         sessionsListAdapter = new SessionsListAdapter(this, sessions, trackWiseSessionList);
+=======
+        sessionsListAdapter = new SessionsListAdapter(this, mSessions, trackWiseSessionList);
+        if(searchText!=null){
+            sessionsListAdapter.getFilter().filter(searchText);
+        }
+>>>>>>> text_align
         sessionsRecyclerView.setAdapter(sessionsListAdapter);
         sessionsRecyclerView.scrollToPosition(SessionsListAdapter.listPosition);
         sessionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -128,6 +168,7 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
         track.removeAllChangeListeners();
         track.addChangeListener((RealmObjectChangeListener<Track>) (track, objectChangeSet) -> {
             int color = Color.parseColor(track.getColor());
+<<<<<<< HEAD
             fontColor = Color.parseColor(track.getFontColor());
             setUiColor(color);
 
@@ -164,13 +205,26 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
                 countUpcoming += 1;
                 countOngoing += 1;
             }
+=======
+            setUiColor(color);
+
+            actionBar.setTitle(track.getName());
+
+            mSessions.clear();
+            mSessions.addAll(track.getSessions().sort("startTime"));
+            sessionsListAdapter.notifyDataSetChanged();
+>>>>>>> text_align
 
             handleVisibility();
         });
     }
 
     private void handleVisibility() {
+<<<<<<< HEAD
         if (!sessions.isEmpty()) {
+=======
+        if (!mSessions.isEmpty()) {
+>>>>>>> text_align
             noSessionsView.setVisibility(View.GONE);
             sessionsRecyclerView.setVisibility(View.VISIBLE);
         } else {
@@ -184,11 +238,14 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
 
         sessionsListAdapter.setColor(color);
 
+<<<<<<< HEAD
         //setting of back button according to track font color
         Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(fontColor, PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
+=======
+>>>>>>> text_align
         if (Views.isCompatible(Build.VERSION_CODES.LOLLIPOP)) {
             getWindow().setStatusBarColor(Views.getDarkColor(color));
             sessionsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -218,7 +275,11 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
     public void onStop() {
         super.onStop();
         OpenEventApp.getEventBus().unregister(this);
+<<<<<<< HEAD
         if (track != null) track.removeAllChangeListeners();
+=======
+        if(track != null) track.removeAllChangeListeners();
+>>>>>>> text_align
     }
 
     @Override
@@ -227,12 +288,15 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
         sessionsListAdapter.notifyDataSetChanged();
     }
 
+<<<<<<< HEAD
     @Override
     protected void onDestroy() {
         super.onDestroy();
         DrawableCompat.setTint(menu.findItem(R.id.action_search_tracks).getIcon(), Color.WHITE);
     }
 
+=======
+>>>>>>> text_align
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_tracks;
@@ -251,6 +315,7 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
         switch (item.getItemId()) {
             case R.id.action_search_sessions:
                 return true;
+<<<<<<< HEAD
             case R.id.upcoming_sessions:
                 if (ongoingPosition != 0)
                     gridLayoutManager.scrollToPositionWithOffset(ongoingPosition, 0);
@@ -259,6 +324,8 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
                 else if (flag > 0) {
                     Toast.makeText(this, getString(R.string.no_upcoming_ongoing), Toast.LENGTH_SHORT).show();
                 }
+=======
+>>>>>>> text_align
             default:
                 //Do nothing
         }
@@ -298,6 +365,11 @@ public class TrackSessionsActivity extends BaseActivity implements SearchView.On
 
     @Override
     public boolean onQueryTextChange(String query) {
+<<<<<<< HEAD
+=======
+        sessionsListAdapter.getFilter().filter(query);
+
+>>>>>>> text_align
         searchText = query;
         sessionsListAdapter.filter(searchText);
 

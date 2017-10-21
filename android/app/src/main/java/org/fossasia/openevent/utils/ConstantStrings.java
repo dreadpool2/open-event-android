@@ -18,10 +18,13 @@ public class ConstantStrings {
 
     public static final String APP_NAME = "APP_NAME";
 
+<<<<<<< HEAD
     public static final String IS_AUTH_ENABLED = "is_auth_enabled";
 
     public static final String EVENT_ID = "eventId";
 
+=======
+>>>>>>> text_align
     public static final String ORG_DESCRIPTION = "organizer_description";
 
     public static final String TIMEZONE = "timezone";
@@ -62,6 +65,7 @@ public class ConstantStrings {
 
     public static final String IS_DOWNLOAD_DONE = "isDownloadDone";
 
+<<<<<<< HEAD
     public static final String IS_MAP_FRAGMENT_FROM_MAIN_ACTIVITY = "isMapFragmenFromMainActivity";
 
     public static final String LOCATION_NAME = "locationName";
@@ -93,4 +97,9 @@ public class ConstantStrings {
     public static final String SOCIAL_LINK_YOUTUBE ="YouTube";
 
     public static final String SOCIAL_LINK_GOOGLE ="Google";
+=======
+    public static final String PREF_SORT = "sortType";
+
+    public static final String SESSION_MAP_ID = "sessionMapId";
+>>>>>>> text_align
 }

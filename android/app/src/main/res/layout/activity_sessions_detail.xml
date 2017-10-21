@@ -25,7 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+<<<<<<< HEAD
             app:expandedTitleTextAppearance="@style/ExpandedAppBar"
+=======
+>>>>>>> text_align
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 

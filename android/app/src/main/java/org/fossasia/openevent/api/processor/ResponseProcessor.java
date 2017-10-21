@@ -1,9 +1,15 @@
 package org.fossasia.openevent.api.processor;
 
 import org.fossasia.openevent.OpenEventApp;
+<<<<<<< HEAD
 import org.fossasia.openevent.events.DownloadEvent;
 import org.fossasia.openevent.events.RetrofitError;
 
+=======
+import org.fossasia.openevent.dbutils.RealmDataRepository;
+import org.fossasia.openevent.events.DownloadEvent;
+import org.fossasia.openevent.events.RetrofitError;
+>>>>>>> text_align
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -31,6 +37,14 @@ abstract class ResponseProcessor<T> implements Callback<T> {
         DownloadEvent downloadEvent = getDownloadEvent(false);
         if (downloadEvent != null)
             OpenEventApp.getEventBus().post(downloadEvent);
+<<<<<<< HEAD
+=======
+
+        RealmDataRepository.getDefaultInstance()
+                .clearVersions()
+                .subscribeOn(Schedulers.computation())
+                .subscribe(() -> Timber.d("Deleting of Version table complete"), Timber::e);
+>>>>>>> text_align
     }
 
     protected void complete(Completable completable) {

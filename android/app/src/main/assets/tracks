@@ -1,8 +1,15 @@
 [
     {
         "name": "Breaks",
+<<<<<<< HEAD
         "color": "#94868c",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#94868c",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 3020,
@@ -22,8 +29,15 @@
     },
     {
         "name": "Exhibition",
+<<<<<<< HEAD
         "color": "#a86767",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#a86767",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 3073,
@@ -111,8 +125,15 @@
     },
     {
         "name": "Debian Mini-Debconf",
+<<<<<<< HEAD
         "color": "#CC0066",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#CC0066",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2873,
@@ -132,8 +153,15 @@
     },
     {
         "name": "Internet, Society & Politics",
+<<<<<<< HEAD
         "color": "#9d75b5",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#9d75b5",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2865,
@@ -181,8 +209,15 @@
     },
     {
         "name": "Kernel & Platform",
+<<<<<<< HEAD
         "color": "#c77398",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#c77398",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2847,
@@ -234,8 +269,15 @@
     },
     {
         "name": "Database - PGDay",
+<<<<<<< HEAD
         "color": "#4ac950",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#4ac950",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 3050,
@@ -275,8 +317,15 @@
     },
     {
         "name": "Database",
+<<<<<<< HEAD
         "color": "#4ac950",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#4ac950",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2931,
@@ -288,8 +337,15 @@
     },
     {
         "name": "Python",
+<<<<<<< HEAD
         "color": "#f2da04",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#f2da04",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2819,
@@ -317,8 +373,15 @@
     },
     {
         "name": "Science",
+<<<<<<< HEAD
         "color": "#1e78ff",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#1e78ff",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2878,
@@ -350,8 +413,15 @@
     },
     {
         "name": "Open Tech",
+<<<<<<< HEAD
         "color": "#ff3737",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#ff3737",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2797,
@@ -451,8 +521,15 @@
     },
     {
         "name": "Design, Art, Community",
+<<<<<<< HEAD
         "color": "#9c7171",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#9c7171",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2975,
@@ -504,8 +581,15 @@
     },
     {
         "name": "DevOps",
+<<<<<<< HEAD
         "color": "#cf8c56",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#cf8c56",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 3027,
@@ -577,8 +661,15 @@
     },
     {
         "name": "Health Tech",
+<<<<<<< HEAD
         "color": "#7e9c7e",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#7e9c7e",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2815,
@@ -594,8 +685,15 @@
     },
     {
         "name": "Android",
+<<<<<<< HEAD
         "color": "#b852d1",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#b852d1",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2999,
@@ -623,8 +721,15 @@
     },
     {
         "name": "Blockchain",
+<<<<<<< HEAD
         "color": "#AD1457",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#AD1457",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 3076,
@@ -656,8 +761,15 @@
     },
     {
         "name": "Web & Mobile",
+<<<<<<< HEAD
         "color": "#74cae6",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#74cae6",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2800,
@@ -737,8 +849,15 @@
     },
     {
         "name": "AI & Machine Learning",
+<<<<<<< HEAD
         "color": "#4da898",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#4da898",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2991,
@@ -814,8 +933,15 @@
     },
     {
         "name": "Database - MySQL Day",
+<<<<<<< HEAD
         "color": "#4ac950",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#4ac950",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2832,
@@ -875,8 +1001,15 @@
     },
     {
         "name": "Tech Kids",
+<<<<<<< HEAD
         "color": "#e0d802",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#e0d802",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2802,
@@ -944,8 +1077,15 @@
     },
     {
         "name": "Open Source Software",
+<<<<<<< HEAD
         "color": "#ffab3f",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#ffab3f",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2980,
@@ -1005,8 +1145,15 @@
     },
     {
         "name": "Hardware & Making",
+<<<<<<< HEAD
         "color": "#c45b1f",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#c45b1f",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 3072,
@@ -1054,8 +1201,15 @@
     },
     {
         "name": "Startup and Business Development",
+<<<<<<< HEAD
         "color": "#fa8181",
         "font-color": "#000000",
+=======
+        "location": null,
+        "color": "#fa8181",
+        "font_color": "#000000",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 3049,
@@ -1087,8 +1241,15 @@
     },
     {
         "name": "Security and Privacy",
+<<<<<<< HEAD
         "color": "#3e5e8f",
         "font-color": "#ffffff",
+=======
+        "location": null,
+        "color": "#3e5e8f",
+        "font_color": "#ffffff",
+        "track_image_url": null,
+>>>>>>> text_align
         "sessions": [
             {
                 "id": 2881,

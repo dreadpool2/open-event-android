@@ -77,7 +77,10 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/heading_text_size"
                     android:textStyle="bold"
+<<<<<<< HEAD
                     android:layout_marginLeft="@dimen/layout_margin_extra_large"
+=======
+>>>>>>> text_align
                     tools:targetApi="jelly_bean"
                     tools:text="Title" />
 
@@ -87,8 +90,11 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_large"
+<<<<<<< HEAD
                     android:layout_marginRight="@dimen/layout_margin_extra_large"
                     android:layout_marginLeft="@dimen/layout_margin_extra_large"
+=======
+>>>>>>> text_align
                     tools:text="Subtitle"
                     android:paddingBottom="@dimen/padding_small"/>
 

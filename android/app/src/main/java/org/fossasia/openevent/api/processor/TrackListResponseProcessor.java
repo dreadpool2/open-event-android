@@ -15,8 +15,13 @@ public class TrackListResponseProcessor extends ResponseProcessor<List<Track>> {
     }
 
     @Override
+<<<<<<< HEAD
     protected DownloadEvent getDownloadEvent(boolean success) {
         return new TracksDownloadEvent(success);
+=======
+    protected DownloadEvent getDownloadEvent(boolean suceess) {
+        return new TracksDownloadEvent(suceess);
+>>>>>>> text_align
     }
 
     @Override

@@ -1,7 +1,13 @@
 package org.fossasia.openevent.fragments;
 
 import android.app.AlertDialog;
+<<<<<<< HEAD
+=======
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+>>>>>>> text_align
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -20,11 +26,17 @@ import org.fossasia.openevent.adapters.ScheduleViewPagerAdapter;
 import org.fossasia.openevent.data.Track;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.utils.ConstantStrings;
+<<<<<<< HEAD
 import org.fossasia.openevent.utils.DateConverter;
 import org.fossasia.openevent.utils.SharedPreferencesUtil;
 import org.fossasia.openevent.utils.Utils;
 import org.threeten.bp.format.DateTimeParseException;
 
+=======
+import org.fossasia.openevent.utils.DateUtils;
+
+import java.text.ParseException;
+>>>>>>> text_align
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,9 +60,16 @@ public class ScheduleFragment extends BaseFragment {
 
     private CompositeDisposable compositeDisposable;
     private int sortType;
+<<<<<<< HEAD
     private ScheduleViewPagerAdapter adapter;
     private ViewPager.OnPageChangeListener onPageChangeListener;
     private List<Track> tracks = new ArrayList<>();
+=======
+    private SharedPreferences sharedPreferences;
+    private ScheduleViewPagerAdapter adapter;
+    private ViewPager.OnPageChangeListener onPageChangeListener;
+    private List<Track> mTracks = new ArrayList<>();
+>>>>>>> text_align
     private String tracksNames[];
     private boolean isTrackSelected[];
     private List<String> selectedTracks;
@@ -67,7 +86,12 @@ public class ScheduleFragment extends BaseFragment {
         filterBar.setVisibility(View.GONE);
         OpenEventApp.getEventBus().register(true);
         compositeDisposable = new CompositeDisposable();
+<<<<<<< HEAD
         sortType = SharedPreferencesUtil.getInt(ConstantStrings.PREF_SORT_SCHEDULE, 2);
+=======
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sortType = sharedPreferences.getInt(ConstantStrings.PREF_SORT, 0);
+>>>>>>> text_align
         selectedTracks = new ArrayList<>();
 
         setupViewPager(viewPager);
@@ -92,9 +116,15 @@ public class ScheduleFragment extends BaseFragment {
 
                         try {
                             adapter.addFragment(new DayScheduleFragment(),
+<<<<<<< HEAD
                                     DateConverter.formatDay(date), date);
                             adapter.notifyDataSetChanged();
                         } catch (DateTimeParseException pe) {
+=======
+                                    DateUtils.formatDay(date), date);
+                            adapter.notifyDataSetChanged();
+                        } catch (ParseException pe) {
+>>>>>>> text_align
                             Timber.e(pe);
                             Timber.e("Invalid date %s in database", date);
                         }
@@ -102,6 +132,7 @@ public class ScheduleFragment extends BaseFragment {
                 });
 
         realmRepo.getTracks().addChangeListener((tracks, orderedCollectionChangeSet) -> {
+<<<<<<< HEAD
             this.tracks.clear();
             this.tracks.addAll(tracks);
             tracksNames = new String[this.tracks.size()];
@@ -109,11 +140,24 @@ public class ScheduleFragment extends BaseFragment {
 
             for(int i = 0; i < this.tracks.size(); i++){
                 tracksNames[i] = this.tracks.get(i).getName();
+=======
+            mTracks.clear();
+            mTracks.addAll(tracks);
+            tracksNames = new String[mTracks.size()];
+            isTrackSelected = new boolean[mTracks.size()];
+
+            for(int i = 0; i < mTracks.size(); i++){
+                tracksNames[i] = mTracks.get(i).getName();
+>>>>>>> text_align
             }
         });
 
         viewPager.setAdapter(adapter);
+<<<<<<< HEAD
         viewPager.setPageMargin(Math.round(Utils.dpToPx(15)));
+=======
+        viewPager.setPageMargin(dpToPx(15));
+>>>>>>> text_align
         viewPager.setPageMarginDrawable(R.color.grey);
 
         onPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -135,11 +179,23 @@ public class ScheduleFragment extends BaseFragment {
 
         viewPager.addOnPageChangeListener(onPageChangeListener);
     }
+<<<<<<< HEAD
 
     private void notifyUpdate(int position, List<String> selectedTracks) {
         if(position == -1)
             position = viewPager.getCurrentItem();
 
+=======
+
+    private int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    private void notifyUpdate(int position, List<String> selectedTracks) {
+        if(position == -1)
+            position = viewPager.getCurrentItem();
+
+>>>>>>> text_align
         ((DayScheduleFragment) adapter.getItem(position)).filter(selectedTracks);
     }
 
@@ -151,7 +207,13 @@ public class ScheduleFragment extends BaseFragment {
                         .setTitle(R.string.dialog_sort_title)
                         .setSingleChoiceItems(R.array.session_sort, sortType, (dialog, which) -> {
                             sortType = which;
+<<<<<<< HEAD
                             SharedPreferencesUtil.putInt(ConstantStrings.PREF_SORT_SCHEDULE, which);
+=======
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt(ConstantStrings.PREF_SORT, which);
+                            editor.apply();
+>>>>>>> text_align
                             notifyUpdate(-1, selectedTracks);
                             dialog.dismiss();
                         });

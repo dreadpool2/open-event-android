@@ -28,8 +28,13 @@ import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.events.RefreshUiEvent;
 import org.fossasia.openevent.events.TracksDownloadEvent;
 import org.fossasia.openevent.utils.NetworkUtils;
+<<<<<<< HEAD
 import org.fossasia.openevent.utils.Utils;
 import org.fossasia.openevent.utils.Views;
+=======
+import org.fossasia.openevent.utils.ShowNotificationSnackBar;
+import org.fossasia.openevent.utils.Utils;
+>>>>>>> text_align
 import org.fossasia.openevent.views.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.lang.ref.WeakReference;
@@ -38,7 +43,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import io.realm.RealmResults;
+<<<<<<< HEAD
 import timber.log.Timber;
+=======
+>>>>>>> text_align
 
 /**
  * User: MananWason
@@ -48,7 +56,11 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
 
     final private String SEARCH = "searchText";
 
+<<<<<<< HEAD
     private List<Track> tracks = new ArrayList<>();
+=======
+    private List<Track> mTracks = new ArrayList<>();
+>>>>>>> text_align
     private TracksListAdapter tracksListAdapter;
 
     @BindView(R.id.tracks_swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
@@ -68,6 +80,7 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
+<<<<<<< HEAD
         Utils.registerIfUrlValid(swipeRefreshLayout, this, this::refresh);
         setUpRecyclerView();
 
@@ -94,6 +107,11 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
 
     private void setUpRecyclerView() {
         tracksListAdapter = new TracksListAdapter(getContext(), tracks);
+=======
+        handleVisibility();
+
+        Utils.registerIfUrlValid(swipeRefreshLayout, this, this::refresh);
+>>>>>>> text_align
 
         tracksRecyclerView.setHasFixedSize(true);
         tracksRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -103,6 +121,7 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
         final StickyRecyclerHeadersDecoration headersDecoration = new StickyRecyclerHeadersDecoration(tracksListAdapter);
         tracksRecyclerView.addItemDecoration(headersDecoration);
         tracksListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+<<<<<<< HEAD
             @Override
             public void onChanged() {
                 headersDecoration.invalidateHeaders();
@@ -112,6 +131,31 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
 
     public void handleVisibility() {
         if (!tracks.isEmpty()) {
+=======
+            @Override public void onChanged() {
+                headersDecoration.invalidateHeaders();
+            }
+        });
+
+        if (savedInstanceState != null && savedInstanceState.getString(SEARCH) != null) {
+            searchText = savedInstanceState.getString(SEARCH);
+        }
+
+        realmResults = realmRepo.getTracks();
+        realmResults.addChangeListener((tracks, orderedCollectionChangeSet) -> {
+            mTracks.clear();
+            mTracks.addAll(tracks);
+
+            tracksListAdapter.notifyDataSetChanged();
+            handleVisibility();
+        });
+
+        return view;
+    }
+
+    public void handleVisibility() {
+        if (!mTracks.isEmpty()) {
+>>>>>>> text_align
             noTracksView.setVisibility(View.GONE);
             tracksRecyclerView.setVisibility(View.VISIBLE);
         } else {
@@ -165,7 +209,11 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
     @Override
     public boolean onQueryTextChange(String query) {
         searchText = query;
+<<<<<<< HEAD
         tracksListAdapter.filter(searchText);
+=======
+        tracksListAdapter.getFilter().filter(searchText);
+>>>>>>> text_align
 
         return true;
     }
@@ -177,12 +225,17 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
     }
 
     @Subscribe
+<<<<<<< HEAD
     public void  refreshData(RefreshUiEvent event) {
+=======
+    public void refreshData(RefreshUiEvent event) {
+>>>>>>> text_align
         handleVisibility();
     }
 
     @Subscribe
     public void onTrackDownloadDone(TracksDownloadEvent event) {
+<<<<<<< HEAD
         Views.setSwipeRefreshLayout(swipeRefreshLayout, false);
 
         if (event.isState()) {
@@ -193,6 +246,16 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
         } else {
             Timber.i("Tracks download failed");
             if (getActivity() != null && windowFrame != null) {
+=======
+        if(swipeRefreshLayout!=null)
+            swipeRefreshLayout.setRefreshing(false);
+        if (event.isState()) {
+            if (!searchView.getQuery().toString().isEmpty() && !searchView.isIconified()) {
+                tracksListAdapter.getFilter().filter(searchView.getQuery());
+            }
+        } else {
+            if (getActivity() != null) {
+>>>>>>> text_align
                 Snackbar.make(windowFrame, getActivity().getString(R.string.refresh_failed), Snackbar.LENGTH_LONG).setAction(R.string.retry_download, view -> refresh()).show();
             }
         }
@@ -200,6 +263,7 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
 
     private void refresh() {
         NetworkUtils.checkConnection(new WeakReference<>(getContext()), new NetworkUtils.NetworkStateReceiverListener() {
+<<<<<<< HEAD
 
             @Override
             public void networkAvailable() {
@@ -212,6 +276,44 @@ public class TracksFragment extends BaseFragment implements SearchView.OnQueryTe
                 OpenEventApp.getEventBus().post(new TracksDownloadEvent(false));
             }
         });
+=======
+            @Override
+            public void activeConnection() {
+                //Internet is working
+                DataDownloadManager.getInstance().downloadTracks();
+            }
+
+            @Override
+            public void inactiveConnection() {
+                //set is refreshing false as let user to login
+                if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                //Device is connected to WI-FI or Mobile Data but Internet is not working
+                ShowNotificationSnackBar showNotificationSnackBar = new ShowNotificationSnackBar(getContext(),getView(),swipeRefreshLayout) {
+                    @Override
+                    public void refreshClicked() {
+                        refresh();
+                    }
+                };
+                //show snackbar will be useful if user have blocked notification for this app
+                showNotificationSnackBar.showSnackBar();
+                //show notification (Only when connected to WiFi)
+                showNotificationSnackBar.buildNotification();
+            }
+
+            @Override
+            public void networkAvailable() {
+                // Network is available but we need to wait for activity
+            }
+
+            @Override
+            public void networkUnavailable() {
+                OpenEventApp.getEventBus().post(new TracksDownloadEvent(false));
+            }
+        });
+
+>>>>>>> text_align
     }
 
 }

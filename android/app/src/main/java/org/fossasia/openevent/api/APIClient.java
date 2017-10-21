@@ -1,12 +1,17 @@
 package org.fossasia.openevent.api;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+<<<<<<< HEAD
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jasminb.jsonapi.retrofit.JSONAPIConverterFactory;
 
 import org.fossasia.openevent.BuildConfig;
 import org.fossasia.openevent.OpenEventApp;
 import org.fossasia.openevent.api.network.FacebookGraphAPI;
+=======
+
+import org.fossasia.openevent.BuildConfig;
+>>>>>>> text_align
 import org.fossasia.openevent.api.network.OpenEventAPI;
 import org.fossasia.openevent.data.Event;
 import org.fossasia.openevent.data.Microlocation;
@@ -54,10 +59,24 @@ public final class APIClient {
     private static OkHttpClient.Builder okHttpClientBuilder;
     private static Retrofit.Builder retrofitBuilder;
 
+<<<<<<< HEAD
     static {
         okHttpClientBuilder = new OkHttpClient().newBuilder()
                 .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+=======
+    public APIClient() {
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient().newBuilder()
+                .connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                .readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+
+        if(BuildConfig.DEBUG)
+            okHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor());
+
+        OkHttpClient okHttpClient = okHttpClientBuilder.addInterceptor(new HttpLoggingInterceptor()
+                .setLevel(HttpLoggingInterceptor.Level.BASIC))
+                .build();
+>>>>>>> text_align
 
         if (BuildConfig.DEBUG)
             okHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor());

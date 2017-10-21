@@ -11,7 +11,11 @@ import validators
 from celery.utils.log import get_task_logger
 from flask import current_app
 
+<<<<<<< HEAD
 from app.utils import replace, clear_dir, unzip, get_build_tools_version, change_theme
+=======
+from app.utils import replace, clear_dir, unzip, get_build_tools_version
+>>>>>>> text_align
 from app.utils.assets import resize_launcher_icon, resize_background_image, save_logo
 from app.utils.libs.asset_resizer import DENSITY_TYPES
 from app.utils.notification import Notification
@@ -96,7 +100,11 @@ class Generator:
             if os.path.isfile(self.get_temp_asset_path('meta')):
                 with open(self.get_temp_asset_path('meta')) as json_data:
                     meta = json.load(json_data)
+<<<<<<< HEAD
                     root_url = meta['root-url']
+=======
+                    root_url = meta['root_url']
+>>>>>>> text_align
                     if root_url:
                         self.api_link = root_url + '/api/v1/events/' + str(event_id)
 
@@ -231,7 +239,10 @@ class Generator:
         self.save_file_in_temp_assets('speakers')
         self.save_file_in_temp_assets('sponsors')
         self.save_file_in_temp_assets('tracks')
+<<<<<<< HEAD
         self.save_file_in_temp_assets('sessions/types')
+=======
+>>>>>>> text_align
         logger.info('Download complete')
 
     def save_file_in_temp_assets(self, end_point='event'):

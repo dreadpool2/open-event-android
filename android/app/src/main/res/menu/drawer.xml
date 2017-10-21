@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+<<<<<<< HEAD
 
     <group android:id="@+id/menu_user_profile">
         <item
@@ -9,6 +10,8 @@
             app:showAsAction="always" />
     </group>
 
+=======
+>>>>>>> text_align
     <group
         android:id="@+id/menu_top"
         android:checkableBehavior="single">
@@ -18,12 +21,15 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/menu_home" />
         <item
+<<<<<<< HEAD
             android:id="@+id/nav_feed"
             android:checked="true"
             android:icon="@drawable/ic_feed_black_24dp"
             app:showAsAction="always"
             android:title="@string/menu_feed" />
         <item
+=======
+>>>>>>> text_align
             android:id="@+id/nav_tracks"
             android:checked="true"
             android:icon="@drawable/ic_event_white_24dp"
@@ -72,6 +78,14 @@
             android:icon="@drawable/ic_share_white_24dp"
             app:showAsAction="always"
             android:title="@string/menu_share" />
+<<<<<<< HEAD
+=======
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info_black_24dp"
+            app:showAsAction="always"
+            android:title="@string/menu_about" />
+>>>>>>> text_align
 
     </group>
 

@@ -18,7 +18,11 @@ public class SessionListResponseProcessor extends ResponseProcessor<List<Session
                 .map(session -> {
                     if (session.getMicrolocation() == null)
                         session.setMicrolocation(new Microlocation(0, ""));
+<<<<<<< HEAD
                     session.setStartDate(session.getStartsAt().split("T")[0]);
+=======
+                    session.setStartDate(session.getStartTime().split("T")[0]);
+>>>>>>> text_align
 
                     return session;
                 })

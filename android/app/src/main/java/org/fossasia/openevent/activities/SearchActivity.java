@@ -4,7 +4,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.v7.widget.DividerItemDecoration;
+=======
+>>>>>>> text_align
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -18,7 +21,10 @@ import org.fossasia.openevent.OpenEventApp;
 import org.fossasia.openevent.R;
 import org.fossasia.openevent.adapters.GlobalSearchAdapter;
 import org.fossasia.openevent.data.Microlocation;
+<<<<<<< HEAD
 import org.fossasia.openevent.data.Session;
+=======
+>>>>>>> text_align
 import org.fossasia.openevent.data.Speaker;
 import org.fossasia.openevent.data.Track;
 
@@ -45,7 +51,11 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     private final String SEARCH = "SAVE_KEY_ON_ROTATE";
 
     @BindView(R.id.search_recyclerView)
+<<<<<<< HEAD
     protected RecyclerView searchRecyclerView;
+=======
+    protected  RecyclerView searchRecyclerView;
+>>>>>>> text_align
     @BindView(R.id.txt_no_results)
     protected TextView noResultsView;
 
@@ -55,13 +65,19 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
         OpenEventApp.getEventBus().register(this);
 
+<<<<<<< HEAD
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+=======
+>>>>>>> text_align
         handleVisibility();
 
         globalSearchAdapter = new GlobalSearchAdapter(results, this);
         searchRecyclerView.setAdapter(globalSearchAdapter);
+<<<<<<< HEAD
         searchRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+=======
+>>>>>>> text_align
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (savedInstanceState != null && savedInstanceState.getString(SEARCH) != null) {
@@ -81,17 +97,27 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+<<<<<<< HEAD
         inflater.inflate(R.menu.menu_search_activity, menu);
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+=======
+        inflater.inflate(R.menu.menu_home, menu);
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search_home).getActionView();
+>>>>>>> text_align
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
         searchView.setOnQueryTextListener(this);
+<<<<<<< HEAD
         // To expand search view by default
         searchView.setIconified(false);
         searchView.requestFocus();
+=======
+>>>>>>> text_align
         if (searchText != null) {
             searchView.setQuery(searchText, true);
         }
@@ -134,7 +160,10 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
             String query = constraint.toLowerCase(Locale.getDefault());
             String wildcardQuery = String.format("*%s*", query);
             addResultsFromTracks(wildcardQuery);
+<<<<<<< HEAD
             addResultFromSessions(wildcardQuery);
+=======
+>>>>>>> text_align
             addResultsFromSpeakers(wildcardQuery);
             addResultsFromLocations(wildcardQuery);
         }
@@ -166,7 +195,11 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
                 .like("name", queryString, Case.INSENSITIVE).findAllSortedAsync("name");
 
         filteredTracks.addChangeListener(tracks -> {
+<<<<<<< HEAD
             if (tracks.size() > 0) {
+=======
+            if(tracks.size()>0){
+>>>>>>> text_align
                 results.add("Tracks");
             }
             results.addAll(tracks);
@@ -183,7 +216,11 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
                 .like("organisation", queryString, Case.INSENSITIVE).findAllSortedAsync("name");
 
         filteredSpeakers.addChangeListener(speakers -> {
+<<<<<<< HEAD
             if (speakers.size() > 0) {
+=======
+            if(speakers.size()>0){
+>>>>>>> text_align
                 results.add("Speakers");
             }
             results.addAll(speakers);
@@ -198,8 +235,13 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
                 .like("name", queryString, Case.INSENSITIVE).findAllSortedAsync("name");
 
         filteredMicrolocations.addChangeListener(microlocations -> {
+<<<<<<< HEAD
             if (microlocations.size() > 0) {
                 results.add("Locations");
+=======
+            if(microlocations.size()>0) {
+                results.add("Location");
+>>>>>>> text_align
             }
             results.addAll(filteredMicrolocations);
             globalSearchAdapter.notifyDataSetChanged();
@@ -208,6 +250,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         });
     }
 
+<<<<<<< HEAD
     public void addResultFromSessions(String queryString) {
         RealmResults<Session> filteredSessions = realm.where(Session.class)
                 .like("title", queryString, Case.INSENSITIVE).findAllSortedAsync("title");
@@ -223,6 +266,8 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         });
     }
 
+=======
+>>>>>>> text_align
     public void handleVisibility() {
         if (results.size() == 0) {
             noResultsView.setVisibility(View.VISIBLE);

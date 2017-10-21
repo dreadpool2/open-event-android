@@ -14,8 +14,13 @@ import java.util.List;
  * Created by Manan Wason on 16/06/16.
  */
 public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
+<<<<<<< HEAD
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> fragmentTitleList = new ArrayList<>();
+=======
+    private List<Fragment> mFragmentList = new ArrayList<>();
+    private List<String> mFragmentTitleList = new ArrayList<>();
+>>>>>>> text_align
 
 
     public ScheduleViewPagerAdapter(FragmentManager manager) {
@@ -37,8 +42,13 @@ public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
         bundle.putString(ConstantStrings.EVENT_DAY, dayArgument);
         fragment.setArguments(bundle);
 
+<<<<<<< HEAD
         fragmentList.add(fragment);
         fragmentTitleList.add(title);
+=======
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+>>>>>>> text_align
     }
 
     @Override

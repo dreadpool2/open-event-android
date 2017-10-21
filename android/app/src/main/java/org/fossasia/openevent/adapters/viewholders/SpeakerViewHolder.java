@@ -2,18 +2,27 @@ package org.fossasia.openevent.adapters.viewholders;
 
 import android.content.Context;
 import android.content.Intent;
+<<<<<<< HEAD
+=======
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.graphics.drawable.VectorDrawableCompat;
+>>>>>>> text_align
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.os.Bundle;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+=======
+>>>>>>> text_align
 import com.squareup.picasso.RequestCreator;
 
 import org.fossasia.openevent.OpenEventApp;
@@ -25,7 +34,10 @@ import org.fossasia.openevent.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+<<<<<<< HEAD
 import timber.log.Timber;
+=======
+>>>>>>> text_align
 
 public class SpeakerViewHolder extends RecyclerView.ViewHolder {
 
@@ -50,13 +62,18 @@ public class SpeakerViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
 
+<<<<<<< HEAD
         this.context = context;
+=======
+        this.context = context.getApplicationContext();
+>>>>>>> text_align
 
         //Attach onClickListener for ViewHolder
         itemView.setOnClickListener(view -> {
             String speakerName = speaker.getName();
             Intent intent = new Intent(this.context, SpeakerDetailsActivity.class);
             intent.putExtra(Speaker.SPEAKER, speakerName);
+<<<<<<< HEAD
 
             try{
                 if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
@@ -70,12 +87,16 @@ public class SpeakerViewHolder extends RecyclerView.ViewHolder {
                 Timber.d("Speaker's transition doesnt occur");
             }
 
+=======
+            this.context.startActivity(intent);
+>>>>>>> text_align
         });
     }
 
     public void bindSpeaker(Speaker speaker) {
         this.speaker = speaker;
 
+<<<<<<< HEAD
         String thumbnail = Utils.parseImageUri(this.speaker.getThumbnailImageUrl());
         String name = Utils.checkStringEmpty(speaker.getName());
 
@@ -99,6 +120,30 @@ public class SpeakerViewHolder extends RecyclerView.ViewHolder {
                 .into(speakerImage);
 
         setStringField(speakerName, name);
+=======
+        String thumbnail = Utils.parseImageUri(this.speaker.getThumbnail());
+
+        if (thumbnail == null)
+            thumbnail = Utils.parseImageUri(this.speaker.getPhoto());
+
+        Drawable placeholder = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_account_circle_grey_24dp, null);
+
+        if(thumbnail != null) {
+            RequestCreator requestCreator = OpenEventApp.picassoWithCache
+                    .load(Uri.parse(thumbnail))
+                    .placeholder(placeholder);
+
+            if (isImageCircle) {
+                requestCreator.transform(new CircleTransform());
+            }
+
+            requestCreator.into(speakerImage);
+        } else {
+           speakerImage.setImageDrawable(placeholder);
+        }
+
+        setStringField(speakerName, speaker.getName());
+>>>>>>> text_align
         setStringField(speakerDesignation, String.format("%s %s", speaker.getPosition(), speaker.getOrganisation()));
         setStringField(speakerCountry, speaker.getCountry());
     }

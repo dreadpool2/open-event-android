@@ -13,7 +13,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.EdgeEffectCompat;
 import android.support.v4.widget.NestedScrollView;
+<<<<<<< HEAD
 import android.support.v4.widget.SwipeRefreshLayout;
+=======
+>>>>>>> text_align
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -104,6 +107,7 @@ public final class Views {
         }
     }
 
+<<<<<<< HEAD
     public static void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout, boolean refreshing) {
         if (swipeRefreshLayout == null)
             return;
@@ -115,6 +119,8 @@ public final class Views {
         }
     }
 
+=======
+>>>>>>> text_align
     public static void setHtml(TextView textView, String html, boolean hide) {
         CharSequence converted = fromHtml(html);
 

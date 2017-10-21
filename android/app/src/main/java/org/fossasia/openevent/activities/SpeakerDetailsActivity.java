@@ -38,6 +38,10 @@ import org.fossasia.openevent.data.Session;
 import org.fossasia.openevent.data.Speaker;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.events.ConnectionCheckEvent;
+<<<<<<< HEAD
+=======
+import org.fossasia.openevent.utils.SpeakerIntent;
+>>>>>>> text_align
 import org.fossasia.openevent.utils.StringUtils;
 import org.fossasia.openevent.utils.Utils;
 import org.fossasia.openevent.utils.Views;
@@ -46,9 +50,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+<<<<<<< HEAD
 import butterknife.OnClick;
 import io.realm.RealmChangeListener;
 
+=======
+import io.realm.RealmChangeListener;
+
+/**
+ * Created by MananWason on 30-06-2015.
+ */
+>>>>>>> text_align
 public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout.OnOffsetChangedListener {
 
     private SessionsListAdapter sessionsListAdapter;
@@ -57,7 +69,15 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
 
     private Speaker selectedSpeaker;
 
+<<<<<<< HEAD
     private List<Session> sessions = new ArrayList<>();
+=======
+    private List<Session> mSessions = new ArrayList<>();
+>>>>>>> text_align
+
+    private boolean isHideToolbarView = false;
+
+    private static final int spearkerWiseSessionList = 2;
 
     private boolean isHideToolbarView = false;
 
@@ -81,6 +101,7 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
     @BindView(R.id.progress_bar)
     protected ProgressBar progressBar;
 
+<<<<<<< HEAD
     @OnClick({R.id.imageView_linkedin, R.id.imageView_fb, R.id.imageView_github, R.id.imageView_twitter, R.id.imageView_web})
     public void openUrl(View v) {
         int id = v.getId();
@@ -114,6 +135,11 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
     private Speaker speaker;
     private String speakerName;
 
+=======
+    private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
+    private Speaker speaker;
+    private String speakerName;
+>>>>>>> text_align
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +160,11 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
         gridLayoutManager = new GridLayoutManager(this, spanCount);
         sessionRecyclerView.setLayoutManager(gridLayoutManager);
 
+<<<<<<< HEAD
         sessionsListAdapter = new SessionsListAdapter(this, sessions, spearkerWiseSessionList);
+=======
+        sessionsListAdapter = new SessionsListAdapter(this, mSessions, spearkerWiseSessionList);
+>>>>>>> text_align
         sessionRecyclerView.setNestedScrollingEnabled(false);
         sessionRecyclerView.setAdapter(sessionsListAdapter);
         sessionRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -151,7 +181,11 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
     }
 
     private void handleVisibility() {
+<<<<<<< HEAD
         if (!sessions.isEmpty()) {
+=======
+        if (!mSessions.isEmpty()) {
+>>>>>>> text_align
             noSessionsView.setVisibility(View.GONE);
             sessionRecyclerView.setVisibility(View.VISIBLE);
         } else {
@@ -159,6 +193,7 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
             sessionRecyclerView.setVisibility(View.GONE);
         }
     }
+<<<<<<< HEAD
 
     private void loadSpeakerImage() {
         String photo = Utils.parseImageUri(selectedSpeaker.getPhotoUrl());
@@ -173,6 +208,22 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
         final Palette.PaletteAsyncListener paletteAsyncListener = palette -> {
             Palette.Swatch swatch = palette.getDarkVibrantSwatch();
 
+=======
+
+    private void loadSpeakerImage() {
+        String photo = Utils.parseImageUri(selectedSpeaker.getPhoto());
+
+        if (photo == null) {
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+
+        final Context context = this;
+
+        final Palette.PaletteAsyncListener paletteAsyncListener = palette -> {
+            Palette.Swatch swatch = palette.getDarkVibrantSwatch();
+
+>>>>>>> text_align
             int backgroundColor = ContextCompat.getColor(context, R.color.color_primary);
 
             if(swatch != null) {
@@ -196,6 +247,8 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
                 Palette.from(bitmap).generate(paletteAsyncListener);
             }
 
+<<<<<<< HEAD
+=======
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
                 progressBar.setVisibility(View.GONE);
@@ -208,6 +261,46 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
         };
         speakerImage.setTag(imageTarget);
 
+        Picasso.with(SpeakerDetailsActivity.this)
+                .load(Uri.parse(photo))
+                .into(imageTarget);
+    }
+
+    private void loadSpeakerDetails() {
+        mSessions.clear();
+        mSessions.addAll(selectedSpeaker.getSessions());
+
+        sessionsListAdapter.notifyDataSetChanged();
+        handleVisibility();
+
+        speakerNameText.setText(selectedSpeaker.getName());
+        if (!TextUtils.isEmpty(selectedSpeaker.getPosition()) && !TextUtils.isEmpty(selectedSpeaker.getOrganisation()))
+            speakerDesignation.setText(String.format("%s, %s", selectedSpeaker.getPosition(), selectedSpeaker.getOrganisation()));
+        else if (!TextUtils.isEmpty(selectedSpeaker.getPosition()))
+            speakerDesignation.setText(selectedSpeaker.getPosition());
+        else if (!TextUtils.isEmpty(selectedSpeaker.getOrganisation()))
+            speakerDesignation.setText(selectedSpeaker.getOrganisation());
+        else
+            speakerDesignation.setVisibility(View.GONE);
+
+        boolean customTabsSupported;
+        Intent customTabIntent = new Intent("android.support.customtabs.action.CustomTabsService");
+        customTabIntent.setPackage("com.android.chrome");
+        customTabsServiceConnection = new CustomTabsServiceConnection() {
+>>>>>>> text_align
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                // No action to be done on preparation of loading
+            }
+        };
+        speakerImage.setTag(imageTarget);
+
+<<<<<<< HEAD
         Picasso.with(SpeakerDetailsActivity.this)
                 .load(Uri.parse(photo))
                 .into(imageTarget);
@@ -229,6 +322,15 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
             speakerDesignation.setText(selectedSpeaker.getOrganisation());
         else
             speakerDesignation.setVisibility(View.GONE);
+=======
+        final SpeakerIntent speakerIntent;
+        if (customTabsClient != null) {
+            speakerIntent = new SpeakerIntent(selectedSpeaker, getApplicationContext(), this,
+                    customTabsClient.newSession(new CustomTabsCallback()), customTabsSupported);
+        } else {
+            speakerIntent = new SpeakerIntent(selectedSpeaker, getApplicationContext(), this, customTabsSupported);
+        }
+>>>>>>> text_align
 
         Views.setHtml(biography, selectedSpeaker.getShortBiography(), true);
 
@@ -259,8 +361,22 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
     protected void onResume() {
         super.onResume();
 
+<<<<<<< HEAD
         OpenEventApp.getEventBus().register(this);
 
+=======
+        Views.setHtml(biography, selectedSpeaker.getShortBiography(), true);
+
+        loadSpeakerImage();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        OpenEventApp.getEventBus().register(this);
+
+>>>>>>> text_align
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float width = displayMetrics.widthPixels / displayMetrics.density;
         int spanCount = (int) (width / 250.00);
@@ -316,7 +432,11 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
                         getResources().getString(R.string.message_1),
                         getResources().getString(R.string.app_name),
                         getResources().getString(R.string.message_2)) +
+<<<<<<< HEAD
                         StringUtils.join(sessions, ", ") +
+=======
+                        StringUtils.join(mSessions, ", ") +
+>>>>>>> text_align
                         String.format("\n\n%s (%s)\n",
                                 getResources().getString(R.string.message_3),
                                 Urls.getAppLink()
@@ -339,6 +459,53 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
         getMenuInflater().inflate(R.menu.menu_speakers_activity, menu);
         
         return true;
+    }
+
+<<<<<<< HEAD
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        float width = displayMetrics.widthPixels / displayMetrics.density;
+        int spanCount = (int) (width / 250.00);
+        gridLayoutManager.setSpanCount(spanCount);
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
+
+        int maxScroll = appBarLayout.getTotalScrollRange();
+        float percentage = (float) Math.abs(offset) / (float) maxScroll;
+
+        if (percentage == 1f && isHideToolbarView) {
+            //Collapsed
+            if (TextUtils.isEmpty(selectedSpeaker.getOrganisation())) {
+                toolbarHeaderView.setVisibility(View.GONE);
+                collapsingToolbarLayout.setTitle(selectedSpeaker.getName());
+                isHideToolbarView = !isHideToolbarView;
+            } else {
+                toolbarHeaderView.setVisibility(View.VISIBLE);
+                collapsingToolbarLayout.setTitle(" ");
+                speakerDesignation.setMaxLines(1);
+                speakerDesignation.setEllipsize(TextUtils.TruncateAt.END);
+                isHideToolbarView = !isHideToolbarView;
+            }
+        } else if (percentage < 1f && !isHideToolbarView) {
+            //Not Collapsed
+            toolbarHeaderView.setVisibility(View.VISIBLE);
+            collapsingToolbarLayout.setTitle(" ");
+            speakerDesignation.setMaxLines(3);
+            isHideToolbarView = !isHideToolbarView;
+        }
+    }
+
+=======
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(customTabsServiceConnection != null)
+            unbindService(customTabsServiceConnection);
     }
 
     @Override
@@ -378,4 +545,5 @@ public class SpeakerDetailsActivity extends BaseActivity implements AppBarLayout
         }
     }
 
+>>>>>>> text_align
 }

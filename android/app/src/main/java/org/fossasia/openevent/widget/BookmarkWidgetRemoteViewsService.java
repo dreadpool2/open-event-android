@@ -15,7 +15,11 @@ import org.fossasia.openevent.R;
 import org.fossasia.openevent.data.Session;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.utils.ConstantStrings;
+<<<<<<< HEAD
 import org.fossasia.openevent.utils.DateConverter;
+=======
+import org.fossasia.openevent.utils.DateUtils;
+>>>>>>> text_align
 
 import java.util.List;
 
@@ -82,9 +86,15 @@ public class BookmarkWidgetRemoteViewsService extends RemoteViewsService {
                     data = new MatrixCursor(columns);
 
                     for (Session session : sessions) {
+<<<<<<< HEAD
                         String start = DateConverter.formatDateWithDefault(DateConverter.FORMAT_12H, session.getStartsAt());
                         String end = DateConverter.formatDateWithDefault(DateConverter.FORMAT_12H, session.getEndsAt());
                         String date = DateConverter.formatDateWithDefault(DateConverter.FORMAT_DATE_COMPLETE, session.getStartsAt());
+=======
+                        String start = DateUtils.formatDateWithDefault(DateUtils.FORMAT_12H, session.getStartTime());
+                        String end = DateUtils.formatDateWithDefault(DateUtils.FORMAT_12H, session.getEndTime());
+                        String date = DateUtils.formatDateWithDefault(DateUtils.FORMAT_DATE_COMPLETE, session.getStartTime());
+>>>>>>> text_align
                         data.addRow(new Object[]{id, session.getTitle(), start, end, date});
                     }
                 } catch (Exception e) {

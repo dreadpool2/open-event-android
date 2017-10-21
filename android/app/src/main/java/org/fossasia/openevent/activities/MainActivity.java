@@ -5,6 +5,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+<<<<<<< HEAD
+=======
+import android.content.SharedPreferences;
+>>>>>>> text_align
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,10 +31,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+<<<<<<< HEAD
+=======
+import android.text.Spannable;
+import android.text.SpannableString;
+>>>>>>> text_align
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -38,19 +46,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.databind.ObjectMapper;
+=======
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+>>>>>>> text_align
 import com.squareup.otto.Subscribe;
 
 import org.fossasia.openevent.OpenEventApp;
 import org.fossasia.openevent.R;
+<<<<<<< HEAD
 import org.fossasia.openevent.activities.auth.UserProfileActivity;
 import org.fossasia.openevent.adapters.FeedAdapter;
 import org.fossasia.openevent.api.APIClient;
+=======
+>>>>>>> text_align
 import org.fossasia.openevent.api.DataDownloadManager;
 import org.fossasia.openevent.api.Urls;
 import org.fossasia.openevent.data.Event;
 import org.fossasia.openevent.data.Microlocation;
 import org.fossasia.openevent.data.Session;
+<<<<<<< HEAD
 import org.fossasia.openevent.data.SessionType;
 import org.fossasia.openevent.data.Speaker;
 import org.fossasia.openevent.data.Sponsor;
@@ -58,6 +75,11 @@ import org.fossasia.openevent.data.Track;
 import org.fossasia.openevent.data.extras.Copyright;
 import org.fossasia.openevent.data.extras.SocialLink;
 import org.fossasia.openevent.data.facebook.CommentItem;
+=======
+import org.fossasia.openevent.data.Speaker;
+import org.fossasia.openevent.data.Sponsor;
+import org.fossasia.openevent.data.Track;
+>>>>>>> text_align
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.events.CounterEvent;
 import org.fossasia.openevent.events.DataDownloadEvent;
@@ -76,8 +98,11 @@ import org.fossasia.openevent.events.SpeakerDownloadEvent;
 import org.fossasia.openevent.events.SponsorDownloadEvent;
 import org.fossasia.openevent.events.TracksDownloadEvent;
 import org.fossasia.openevent.fragments.AboutFragment;
+<<<<<<< HEAD
 import org.fossasia.openevent.fragments.CommentsDialogFragment;
 import org.fossasia.openevent.fragments.FeedFragment;
+=======
+>>>>>>> text_align
 import org.fossasia.openevent.fragments.LocationsFragment;
 import org.fossasia.openevent.fragments.ScheduleFragment;
 import org.fossasia.openevent.fragments.SpeakersListFragment;
@@ -86,18 +111,30 @@ import org.fossasia.openevent.fragments.TracksFragment;
 import org.fossasia.openevent.utils.AuthUtil;
 import org.fossasia.openevent.utils.CommonTaskLoop;
 import org.fossasia.openevent.utils.ConstantStrings;
+<<<<<<< HEAD
 import org.fossasia.openevent.utils.DateConverter;
+=======
+import org.fossasia.openevent.utils.DateUtils;
+>>>>>>> text_align
 import org.fossasia.openevent.utils.DownloadCompleteHandler;
 import org.fossasia.openevent.utils.NetworkUtils;
 import org.fossasia.openevent.utils.SharedPreferencesUtil;
 import org.fossasia.openevent.utils.SmoothActionBarDrawerToggle;
 import org.fossasia.openevent.utils.Utils;
+<<<<<<< HEAD
+=======
+import org.fossasia.openevent.views.CustomTabsSpan;
+>>>>>>> text_align
 import org.fossasia.openevent.widget.DialogFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.lang.reflect.Type;
+>>>>>>> text_align
 import java.util.List;
 
 import butterknife.BindView;
@@ -108,11 +145,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+<<<<<<< HEAD
 import io.realm.RealmList;
 import io.realm.RealmResults;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCallback {
+=======
+import timber.log.Timber;
+
+import static org.fossasia.openevent.R.id.headerDrawer;
+
+public class MainActivity extends BaseActivity {
+
+    private final static String STATE_FRAGMENT = "stateFragment";
+>>>>>>> text_align
 
     private static final String STATE_FRAGMENT = "stateFragment";
     private static final String NAV_ITEM = "navItem";
@@ -120,6 +167,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     private static final String FRAGMENT_TAG_HOME = "HOME_FRAGMENT";
     private static final String FRAGMENT_TAG_REST = "REST_FRAGMENTS";
 
+<<<<<<< HEAD
     private boolean fromServer = true;
     private boolean atHome = true;
     private boolean backPressedOnce;
@@ -127,6 +175,15 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     private boolean isAuthEnabled = SharedPreferencesUtil.getBoolean(ConstantStrings.IS_AUTH_ENABLED, false);
     private boolean customTabsSupported;
     private int currentMenuItemId;
+=======
+    private static final String FRAGMENT_TAG_HOME = "FTAGH";
+
+    private final String FRAGMENT_TAG_TRACKS = "FTAGT";
+
+    private final String FRAGMENT_TAG_REST = "FTAGR";
+>>>>>>> text_align
+
+    private boolean fromServer = true;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.nav_view) NavigationView navigationView;
@@ -135,6 +192,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     @Nullable @BindView(R.id.drawer) DrawerLayout drawerLayout;
     private ImageView headerView;
 
+<<<<<<< HEAD
     private Context context;
     private Dialog dialogNetworkNotification;
     private FragmentManager fragmentManager;
@@ -144,12 +202,39 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     private CompositeDisposable disposable;
     private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
     private Event event; // Future Event, stored to remove listeners
+=======
+    private ImageView headerView;
+
+    private DrawerLayout drawerLayout;
+    private Context context;
+    private SharedPreferences sharedPreferences;
+    private boolean atHome = true;
+    private boolean backPressedOnce = false;
+    private int currentMenuItemId;
+    private boolean mTwoPane = false;
+    private boolean customTabsSupported;
+    private CustomTabsServiceConnection customTabsServiceConnection;
+    private CustomTabsClient customTabsClient;
+    private Runnable runnable;
+    private Handler handler;
+    public static Dialog dialogNetworkNotiff;
+>>>>>>> text_align
+
+    private DownloadCompleteHandler completeHandler;
+
+<<<<<<< HEAD
+=======
+    private CompositeDisposable disposable;
+
+    private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
+    private Event event; // Future Event, stored to remove listeners
 
     public static Intent createLaunchFragmentIntent(Context context) {
         return new Intent(context, MainActivity.class)
                 .putExtra(NAV_ITEM, BOOKMARK);
     }
 
+>>>>>>> text_align
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -170,6 +255,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
+<<<<<<< HEAD
         ((OpenEventApp) getApplicationContext()).attachMainActivity(this);
         ButterKnife.setDebug(true);
         fragmentManager = getSupportFragmentManager();
@@ -179,6 +265,20 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         SharedPreferencesUtil.putInt(ConstantStrings.SESSION_MAP_ID, -1);
         isTwoPane = drawerLayout == null;
         Utils.setTwoPane(isTwoPane);
+=======
+        ButterKnife.setDebug(true);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().putInt(ConstantStrings.SESSION_MAP_ID, -1).apply();
+        setTheme(R.style.AppTheme_NoActionBar_MainTheme);
+        super.onCreate(savedInstanceState);
+
+        if(findViewById(R.id.drawer)!=null) {
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+            mTwoPane = false;
+        } else {
+            mTwoPane = true;
+        }
+>>>>>>> text_align
 
         disposable = new CompositeDisposable();
 
@@ -190,6 +290,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         completeHandler = DownloadCompleteHandler.with(context);
 
         if (Utils.isBaseUrlEmpty()) {
+<<<<<<< HEAD
             if (!SharedPreferencesUtil.getBoolean(ConstantStrings.IS_DOWNLOAD_DONE, false)) {
                 downloadFromAssets();
                 SharedPreferencesUtil.putBoolean(ConstantStrings.IS_DOWNLOAD_DONE, true);
@@ -208,6 +309,91 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
                 getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_REST) == null) {
             doMenuAction(currentMenuItemId);
         }
+=======
+            if (!sharedPreferences.getBoolean(ConstantStrings.IS_DOWNLOAD_DONE, false)) {
+                downloadFromAssets();
+                sharedPreferences.edit().putBoolean(ConstantStrings.IS_DOWNLOAD_DONE, true).apply();
+            }
+        } else {
+            downloadFromServer();
+        }
+
+        if (savedInstanceState == null) {
+            currentMenuItemId = R.id.nav_home;
+        } else {
+            currentMenuItemId = savedInstanceState.getInt(STATE_FRAGMENT);
+        }
+
+        if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_HOME) == null &&
+                getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_REST) == null) {
+            doMenuAction(currentMenuItemId);
+        }
+    }
+
+    private void downloadFromServer(){
+        NetworkUtils.checkConnection(new WeakReference<>(this), new NetworkUtils.NetworkStateReceiverListener() {
+            @Override
+            public void activeConnection() {
+                //Internet is working
+                if (!sharedPreferences.getBoolean(ConstantStrings.IS_DOWNLOAD_DONE, false)) {
+                    DialogFactory.createDownloadDialog(context, R.string.download_assets, R.string.charges_warning, (dialogInterface, button) -> {
+                        if (button==DialogInterface.BUTTON_POSITIVE) {
+                            fromServer = true;
+                            Boolean preference = sharedPreferences.getBoolean(getResources().getString(R.string.download_mode_key), true);
+                            if (preference) {
+                                disposable.add(NetworkUtils.haveNetworkConnectionObservable(MainActivity.this)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(connected -> {
+                                            if (connected) {
+                                                OpenEventApp.postEventOnUIThread(new DataDownloadEvent());
+                                            } else {
+                                                final Snackbar snackbar = Snackbar.make(mainFrame, R.string.internet_preference_warning, Snackbar.LENGTH_INDEFINITE);
+                                                snackbar.setAction(R.string.yes, view -> downloadFromAssets());
+                                                snackbar.show();
+                                            }
+                                        }));
+                            } else {
+                                OpenEventApp.postEventOnUIThread(new DataDownloadEvent());
+                            }
+                        } else if (button==DialogInterface.BUTTON_NEGATIVE) {
+                            fromServer = false;
+                            downloadFromAssets();
+                        }
+                    }).show();
+                } else {
+                    completeHandler.hide();
+                }
+            }
+
+            @Override
+            public void inactiveConnection() {
+                //Device is connected to WI-FI or Mobile Data but Internet is not working
+                ShowNotificationSnackBar showNotificationSnackBar = new ShowNotificationSnackBar(MainActivity.this,mainFrame,null) {
+                    @Override
+                    public void refreshClicked() {
+                        OpenEventApp.getEventBus().unregister(this);
+                        OpenEventApp.getEventBus().register(this);
+                    }
+                };
+                //show snackbar
+                showNotificationSnackBar.showSnackBar();
+                //snow notification (Only when connected to WiFi)
+                showNotificationSnackBar.buildNotification();
+            }
+
+            @Override
+            public void networkAvailable() {
+                // Waiting for connectivity
+            }
+
+            @Override
+            public void networkUnavailable() {
+                Snackbar.make(mainFrame, R.string.display_offline_schedule, Snackbar.LENGTH_LONG).show();
+                downloadFromAssets();
+            }
+        });
+>>>>>>> text_align
     }
 
     private void setUpCustomTab() {
@@ -278,9 +464,14 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     }
 
     private void setUpNavDrawer() {
+<<<<<<< HEAD
         setUpUserProfileMenu();
         headerView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.headerDrawer);
         if (toolbar != null && !isTwoPane) {
+=======
+        headerView = (ImageView) navigationView.getHeaderView(0).findViewById(headerDrawer);
+        if (toolbar != null && !mTwoPane) {
+>>>>>>> text_align
             final ActionBar ab = getSupportActionBar();
             if(ab == null) return;
             SmoothActionBarDrawerToggle smoothActionBarToggle = new SmoothActionBarDrawerToggle(this,
@@ -305,6 +496,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         }
     }
 
+<<<<<<< HEAD
     private void setUpUserProfileMenu() {
         if (!isAuthEnabled) {
             navigationView.getMenu().setGroupVisible(R.id.menu_user_profile, false);
@@ -326,15 +518,29 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
             OpenEventApp.picassoWithCache.load(logo).into(headerView);
         } else {
             OpenEventApp.picassoWithCache.load(R.mipmap.ic_launcher).into(headerView);
+=======
+    private void setNavHeader(Event event) {
+        String logo = event.getLogo();
+        if (!logo.isEmpty()) {
+            OpenEventApp.picassoWithCache.load(logo).into(headerView);
+>>>>>>> text_align
         }
     }
 
     private void saveEventDates(Event event) {
+<<<<<<< HEAD
         String startTime = event.getStartsAt();
         String endTime = event.getEndsAt();
 
         Observable.fromCallable(() ->
                 DateConverter.getDaysInBetween(startTime, endTime)
+=======
+        String startTime = event.getStartTime();
+        String endTime = event.getEndTime();
+
+        Observable.fromCallable(() ->
+                DateUtils.getDaysInBetween(startTime, endTime)
+>>>>>>> text_align
         ).subscribe(eventDates -> realmRepo.saveEventDates(eventDates).subscribe(), throwable -> {
             Timber.e(throwable);
             Timber.e("Error start parsing start date: %s and end date: %s in ISO format",
@@ -348,7 +554,11 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
 
         if (fromServer) {
             // Event successfully loaded, set data downloaded to true
+<<<<<<< HEAD
             SharedPreferencesUtil.putBoolean(ConstantStrings.IS_DOWNLOAD_DONE, true);
+=======
+            sharedPreferences.edit().putBoolean(ConstantStrings.IS_DOWNLOAD_DONE, true).apply();
+>>>>>>> text_align
 
             successMessage = "Download done";
         }
@@ -359,6 +569,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         setupEvent();
         OpenEventApp.postEventOnUIThread(new EventLoadedEvent(event));
         saveEventDates(event);
+<<<<<<< HEAD
 
         downloadPageId();
     }
@@ -450,6 +661,10 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         });
     }
 
+=======
+    }
+
+>>>>>>> text_align
     private void downloadFailed(final DownloadEvent event) {
         Snackbar.make(mainFrame, getString(R.string.download_failed), Snackbar.LENGTH_LONG).setAction(R.string.retry_download, view -> {
             if (event == null)
@@ -463,7 +678,11 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             final int id = menuItem.getItemId();
+<<<<<<< HEAD
             if(!isTwoPane) {
+=======
+            if(!mTwoPane) {
+>>>>>>> text_align
                 drawerLayout.closeDrawers();
                 drawerLayout.postDelayed(() -> doMenuAction(id), 300);
             } else {
@@ -471,6 +690,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
             }
             return true;
         });
+<<<<<<< HEAD
     }
 
     private void shareApplication() {
@@ -518,10 +738,37 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
                 break;
             case R.id.nav_tracks:
                 replaceFragment(new TracksFragment(), R.string.menu_tracks);
+=======
+    }
+
+    private void doMenuAction(int menuItemId) {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (menuItemId) {
+            case R.id.nav_home:
+                atHome = true;
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, new AboutFragment(), FRAGMENT_TAG_HOME).commit();
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.menu_home);
+                }
+                if (currentMenuItemId == R.id.nav_schedule){
+                    addShadowToAppBar(false);
+                }
+                break;
+            case R.id.nav_tracks:
+                atHome = false;
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, new TracksFragment(), FRAGMENT_TAG_REST).commit();
+                addShadowToAppBar(true);
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.menu_tracks);
+                }
+>>>>>>> text_align
                 break;
             case R.id.nav_feed:
                 replaceFragment(new FeedFragment(), R.string.menu_feed);
                 break;
+<<<<<<< HEAD
             case R.id.nav_schedule:
                 replaceFragment(new ScheduleFragment(), R.string.menu_schedule);
                 break;
@@ -554,14 +801,109 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
                 break;
             case R.id.nav_share:
                 shareApplication();
+=======
+            case R.id.nav_speakers:
+                atHome = false;
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, new SpeakersListFragment(), FRAGMENT_TAG_REST).commit();
+                addShadowToAppBar(true);
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.menu_speakers);
+                }
+                break;
+            case R.id.nav_sponsors:
+                atHome = false;
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, new SponsorsFragment(), FRAGMENT_TAG_REST).commit();
+                addShadowToAppBar(true);
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.menu_sponsor);
+                }
+                break;
+            case R.id.nav_locations:
+                atHome = false;
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, new LocationsFragment(), FRAGMENT_TAG_REST).commit();
+                addShadowToAppBar(true);
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.menu_locations);
+                }
+                break;
+            case R.id.nav_map:
+                atHome = false;
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.content_frame,
+                        ((OpenEventApp) getApplication())
+                                .getMapModuleFactory()
+                                .provideMapModule()
+                                .provideMapFragment(), FRAGMENT_TAG_REST).commit();
+                addShadowToAppBar(true);
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle("");
+                }
+                break;
+            case R.id.nav_settings:
+                final Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_share:
+                try {
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.whatsapp_promo_msg_template),
+                            String.format(getString(R.string.app_share_url),getPackageName())));
+                    startActivity(shareIntent);
+                }
+                catch (Exception e) {
+                    Snackbar.make(mainFrame, getString(R.string.error_msg_retry), Snackbar.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.nav_about:
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String app_name = sharedPreferences.getString(ConstantStrings.APP_NAME, "");
+                String org_description = sharedPreferences.getString(ConstantStrings.ORG_DESCRIPTION, "");
+
+                final AlertDialog aboutUs = new AlertDialog.Builder(this)
+                        .setTitle(app_name)
+                        .setMessage(Html.fromHtml(org_description))
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .create();
+                aboutUs.show();
+
+                TextView aboutUsTV = (TextView) aboutUs.findViewById(android.R.id.message);
+                if(aboutUsTV == null) break;
+                aboutUsTV.setMovementMethod(LinkMovementMethod.getInstance());
+                if (customTabsSupported) {
+                    SpannableString welcomeAlertSpannable = new SpannableString(aboutUsTV.getText());
+                    URLSpan[] spans = welcomeAlertSpannable.getSpans(0, welcomeAlertSpannable.length(), URLSpan.class);
+                    for (URLSpan span : spans) {
+                        CustomTabsSpan newSpan = new CustomTabsSpan(span.getURL(), getApplicationContext(), this,
+                                customTabsClient.newSession(new CustomTabsCallback()));
+                        welcomeAlertSpannable.setSpan(newSpan, welcomeAlertSpannable.getSpanStart(span),
+                                welcomeAlertSpannable.getSpanEnd(span),
+                                Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        welcomeAlertSpannable.removeSpan(span);
+                    }
+                    aboutUsTV.setText(welcomeAlertSpannable);
+                }
+>>>>>>> text_align
                 break;
             default:
                 //Do nothing
         }
+<<<<<<< HEAD
+=======
+        currentMenuItemId = menuItemId;
+>>>>>>> text_align
     }
 
     @Override
     public void onBackPressed() {
+<<<<<<< HEAD
         if (!isTwoPane && drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (atHome) {
@@ -577,6 +919,35 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
             replaceFragment(new AboutFragment(), R.string.menu_home);
             navigationView.setCheckedItem(R.id.nav_home);
             addShadowToAppBar(true);
+=======
+        if(!mTwoPane) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else if (atHome) {
+                if (backPressedOnce) {
+                    super.onBackPressed();
+                } else {
+                    backPressedOnce = true;
+                    Snackbar snackbar = Snackbar.make(mainFrame, R.string.press_back_again, 2000);
+                    snackbar.show();
+                    runnable = () -> backPressedOnce = false;
+                    handler = new Handler();
+                    long timer = 2000;
+                    handler.postDelayed(runnable, timer);
+                }
+            } else {
+                atHome = true;
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, new AboutFragment(), FRAGMENT_TAG_REST).commit();
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.menu_home);
+                }
+                if (currentMenuItemId == R.id.nav_schedule) {
+                    addShadowToAppBar(false);
+                }
+            }
+>>>>>>> text_align
         }
     }
 
@@ -608,10 +979,21 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     }
 
     private void startDownload() {
+<<<<<<< HEAD
         int eventId = SharedPreferencesUtil.getInt(ConstantStrings.EVENT_ID, 0);
         if (eventId == 0)
             return;
         DataDownloadManager.getInstance().downloadEvent(eventId);
+=======
+        realmRepo.clearVersions().subscribe(() -> {
+            Timber.d("Cleared JSON db versions");
+        }, throwable -> {
+            throwable.printStackTrace();
+            Timber.e(throwable);
+        });
+
+        DataDownloadManager.getInstance().downloadEvents();
+>>>>>>> text_align
         startDownloadListener();
         Timber.d("Download has started");
     }
@@ -626,6 +1008,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         builder.show();
     }
 
+<<<<<<< HEAD
     public void showErrorSnackbar(String errorType, String errorDesc) {
         completeHandler.hide();
         Snackbar.make(mainFrame, errorType + ": " + errorDesc, Snackbar.LENGTH_LONG).show();
@@ -636,6 +1019,8 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
             dialogNetworkNotification.dismiss();
     }
 
+=======
+>>>>>>> text_align
     @Subscribe
     public void noInternet(NoInternetEvent event) {
         downloadFailed(null);
@@ -644,6 +1029,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     @Subscribe
     public void showNetworkDialog(ShowNetworkDialogEvent event) {
         completeHandler.hide();
+<<<<<<< HEAD
         if (dialogNetworkNotification == null) {
             dialogNetworkNotification = DialogFactory.createSimpleActionDialog(this,
                     R.string.net_unavailable,
@@ -655,6 +1041,16 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         }
 
         dialogNetworkNotification.show();
+=======
+        dialogNetworkNotiff = DialogFactory.createSimpleActionDialog(this,
+                R.string.net_unavailable,
+                R.string.turn_on,
+                (dialog, which) -> {
+                    Intent setNetworkIntent = new Intent(Settings.ACTION_SETTINGS);
+                    startActivity(setNetworkIntent);
+                });
+        dialogNetworkNotiff.show();
+>>>>>>> text_align
     }
 
     @Subscribe
@@ -685,6 +1081,7 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     public void handleJsonEvent(final JsonReadEvent jsonReadEvent) {
         final String name = jsonReadEvent.getName();
         final String json = jsonReadEvent.getJson();
+<<<<<<< HEAD
 
         Completable.fromAction(() -> {
             ObjectMapper objectMapper = OpenEventApp.getObjectMapper();
@@ -718,6 +1115,43 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
 
                     for (Session current : sessions) {
                         current.setStartDate(current.getStartsAt().split("T")[0]);
+=======
+
+        Completable.fromAction(() -> {
+            final Gson gson = new Gson();
+
+            // Need separate instance for background thread
+            Realm realm = Realm.getDefaultInstance();
+
+            RealmDataRepository realmDataRepository = RealmDataRepository
+                    .getInstance(realm);
+
+            switch (name) {
+                case ConstantStrings.EVENT: {
+                    Event event = gson.fromJson(json, Event.class);
+
+                    saveEventDates(event);
+                    realmDataRepository.saveEvent(event).subscribe();
+
+                    realmDataRepository.saveEvent(event).subscribe();
+
+                    OpenEventApp.postEventOnUIThread(new EventDownloadEvent(true));
+                    break;
+                } case ConstantStrings.TRACKS: {
+                    Type listType = new TypeToken<List<Track>>() {}.getType();
+                    List<Track> tracks = gson.fromJson(json, listType);
+
+                    realmDataRepository.saveTracks(tracks).subscribe();
+
+                    OpenEventApp.postEventOnUIThread(new TracksDownloadEvent(true));
+                    break;
+                } case ConstantStrings.SESSIONS: {
+                    Type listType = new TypeToken<List<Session>>() {}.getType();
+                    List<Session> sessions = gson.fromJson(json, listType);
+
+                    for (Session current : sessions) {
+                        current.setStartDate(current.getStartTime().split("T")[0]);
+>>>>>>> text_align
                     }
 
                     realmDataRepository.saveSessions(sessions).subscribe();
@@ -725,26 +1159,42 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
                     OpenEventApp.postEventOnUIThread(new SessionDownloadEvent(true));
                     break;
                 } case ConstantStrings.SPEAKERS: {
+<<<<<<< HEAD
                     List<Speaker> speakers = objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, Speaker.class));
+=======
+                    Type listType = new TypeToken<List<Speaker>>() {}.getType();
+                    List<Speaker> speakers = gson.fromJson(json, listType);
+>>>>>>> text_align
 
                     realmRepo.saveSpeakers(speakers).subscribe();
 
                     OpenEventApp.postEventOnUIThread(new SpeakerDownloadEvent(true));
                     break;
                 } case ConstantStrings.SPONSORS: {
+<<<<<<< HEAD
                     List<Sponsor> sponsors = objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, Sponsor.class));
+=======
+                    Type listType = new TypeToken<List<Sponsor>>() {}.getType();
+                    List<Sponsor> sponsors = gson.fromJson(json, listType);
+>>>>>>> text_align
 
                     realmRepo.saveSponsors(sponsors).subscribe();
 
                     OpenEventApp.postEventOnUIThread(new SponsorDownloadEvent(true));
                     break;
                 } case ConstantStrings.MICROLOCATIONS: {
+<<<<<<< HEAD
                     List<Microlocation> microlocations = objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, Microlocation.class));
+=======
+                    Type listType = new TypeToken<List<Microlocation>>() {}.getType();
+                    List<Microlocation> microlocations = gson.fromJson(json, listType);
+>>>>>>> text_align
 
                     realmRepo.saveLocations(microlocations).subscribe();
 
                     OpenEventApp.postEventOnUIThread(new MicrolocationDownloadEvent(true));
                     break;
+<<<<<<< HEAD
                 } case ConstantStrings.SESSION_TYPES: {
                     List<SessionType> sessionTypes = objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, SessionType.class));
 
@@ -755,6 +1205,12 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
                 } default:
                     //do nothing
             }
+=======
+                } default:
+                    //do nothing
+            }
+
+>>>>>>> text_align
             realm.close();
         }).observeOn(Schedulers.computation()).subscribe(() -> Timber.d("Saved event from JSON"), throwable -> {
             throwable.printStackTrace();
@@ -791,12 +1247,20 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         fromServer = false;
         if (!SharedPreferencesUtil.getBoolean(ConstantStrings.DATABASE_RECORDS_EXIST, false)) {
             //TODO: Add and Take counter value from to config.json
+<<<<<<< HEAD
             SharedPreferencesUtil.putBoolean(ConstantStrings.DATABASE_RECORDS_EXIST, true);
+=======
+            sharedPreferences.edit().putBoolean(ConstantStrings.DATABASE_RECORDS_EXIST, true).apply();
+>>>>>>> text_align
 
             startDownloadListener();
             Timber.d("JSON parsing started");
 
+<<<<<<< HEAD
             OpenEventApp.postEventOnUIThread(new CounterEvent(7)); // Bump if increased
+=======
+            OpenEventApp.postEventOnUIThread(new CounterEvent(6)); // Bump if increased
+>>>>>>> text_align
 
             readJsonAsset(Urls.EVENT);
             readJsonAsset(Urls.SESSIONS);
@@ -836,12 +1300,19 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     protected void onDestroy() {
         super.onDestroy();
         unbindService(customTabsServiceConnection);
+<<<<<<< HEAD
+=======
+        if (handler != null) {
+            handler.removeCallbacks(runnable);
+        }
+>>>>>>> text_align
         if(disposable != null && !disposable.isDisposed())
             disposable.dispose();
         if(event != null)
             event.removeAllChangeListeners();
         if(completeHandler != null)
             completeHandler.stopListening();
+<<<<<<< HEAD
         ((OpenEventApp) getApplicationContext()).detachMainActivity();
     }
 
@@ -859,3 +1330,13 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
         newFragment.show(fragmentManager, "Comments");
     }
 }
+=======
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+}
+>>>>>>> text_align

@@ -1,18 +1,34 @@
+<<<<<<< HEAD
 # How apk is generated using the Android apk generator
 
 ## **Getting the data from uploaded zip/url**
 
 ![Apk Generator](_static/images/androidgenerator.png)
+=======
+## How apk is generated using the Android apk generator
+
+## **Getting the data from uploaded zip/url**
+
+![Apk Generator](images/androidgenerator.png)
+>>>>>>> text_align
 
 The web server and the celery worker run as two separate instances. Data is passed between them via redis. Jobs with payload are added to redis by the web app.
 The moment the `GENERATE ANDROID APP` button is pressed, a `POST` request through function `process` is being made in the file `open-event-android/apk-generator/v2/app/views/__init__.py` where the respective email and the data source is stored.
 
+<<<<<<< HEAD
 ![Generator Process](_static/images/generator.jpeg)
+=======
+![Generator Process](images/generator.jpeg)
+>>>>>>> text_align
 
 A celery task is created with a payload containing the data submitting by the user. In case of a file, it is saved and the payload contains the path to the file, whereas in case of an API endpoint, the payload contains the url.
 After that, the page tells the user that his request is being processed.Now, the celery worker will start processing the task in the background with the help of the function `generate_app_task` which will further call function `generate_app_task_base` both in the file `open-event-android/apk-generator/v2/app/tasks/__init__.py`. An object of the class `generator` is created in `generate_app_task_base` function which is used to call the `generate` method that returns the apk url.
 
+<<<<<<< HEAD
 ![Celery Task](_static/images/celery_task.jpeg)
+=======
+![Celery Task](images/celery_task.jpeg)
+>>>>>>> text_align
 
 ## **Generating the app**
 
@@ -54,6 +70,7 @@ When the `generate` function is called, the app build process takes place in the
 
 After generation of the app, we have two option for delivery of the apk
 
+<<<<<<< HEAD
 ### Email
   For email we use Marrow Mailer. We have a class Notification for sending emails at
  `open-event-android/apk-generator/v2/app/utils/notification.py` and functions in this class is called in `apk-generator/v2/app/generator/generator.py`
@@ -65,14 +82,33 @@ notification.py has two functions
 ![Mailing Code](_static/images/mailcode.png)
 
 ### Direct download
+=======
+ 1. ### Email
+  For email we use Marrow Mailer. We have a class Notification for sending emails at 
+ `open-event-android/apk-generator/v2/app/utils/notification.py` and functions in this class is called in `apk-generator/v2/app/generator/generator.py`
+  
+notification.py has two functions 
+- send  (under development)
+- send_mail_via_smtp_  (for sending mails)
+    
+![Mailing Code](images/mailcode.png)
+
+2. ### Direct download 
+>>>>>>> text_align
 On clicking the Download button `/app/<string:identifier>/download` url is hit with `GET` method `app_download(identifier)` in `open-event-android/apk-generator/v2/app/views/api.py`
 identifier is the argument which is the filename of the file.
 It is downloaded to the location with path as  `BASE_DIR/app/static/releases/filename.apk`
 If the above file is not present then the download is aborted otherwise it returns the absolute path of the downloaded file.
 
+<<<<<<< HEAD
 ![App Download Code](_static/images/downloadapp.png)
 
 ![Webapp Working](_static/images/webapp.gif)
+=======
+![App Download Code](images/downloadapp.png)
+
+![Webapp Working](images/webapp.gif)
+>>>>>>> text_align
 
 ### Keeping the repo size small
 
@@ -101,4 +137,8 @@ git push origin apk --force --quiet > /dev/null
 - Add all the (apk) files and commit them
 - Then delete the old `apk` branch since it contains state app which is not needed in git history
 - Rename current branch to `apk` branch
+<<<<<<< HEAD
 - Force push results to `apk` branch of origin to update the online repository according to local copy. Forced push is needed because the git history and hence the refs are modified in local repo and hence online repo won't be able to merge the changes automatically. Since we are not concerned about the history of `apk` branch, we quietly force push the apk to it.
+=======
+- Force push results to `apk` branch of origin to update the online repository according to local copy. Forced push is needed because the git history and hence the refs are modified in local repo and hence online repo won't be able to merge the changes automatically. Since we are not concerned about the history of `apk` branch, we quietly force push the apk to it.
+>>>>>>> text_align

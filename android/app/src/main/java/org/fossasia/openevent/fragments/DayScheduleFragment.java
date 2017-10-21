@@ -31,7 +31,10 @@ import org.fossasia.openevent.utils.ConstantStrings;
 import org.fossasia.openevent.utils.NetworkUtils;
 import org.fossasia.openevent.utils.SortOrder;
 import org.fossasia.openevent.utils.Utils;
+<<<<<<< HEAD
 import org.fossasia.openevent.utils.Views;
+=======
+>>>>>>> text_align
 import org.fossasia.openevent.views.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.lang.ref.WeakReference;
@@ -39,8 +42,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+<<<<<<< HEAD
 import io.realm.RealmResults;
 import timber.log.Timber;
+=======
+import io.reactivex.disposables.CompositeDisposable;
+>>>>>>> text_align
 
 /**
  * Created by Manan Wason on 17/06/16.
@@ -49,13 +56,19 @@ public class DayScheduleFragment extends BaseFragment implements SearchView.OnQu
 
     final private String SEARCH = "searchText";
 
+<<<<<<< HEAD
     private String searchText = "";
+=======
+    public static String searchText = "";
+
+>>>>>>> text_align
     private SearchView searchView;
 
     @BindView(R.id.schedule_swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.list_schedule) RecyclerView dayRecyclerView;
     @BindView(R.id.txt_no_schedule) TextView noSchedule;
 
+<<<<<<< HEAD
     private List<Session> sessions = new ArrayList<>();
     private List<Session> filteredSessions = new ArrayList<>();
     private DayScheduleAdapter dayScheduleAdapter;
@@ -63,6 +76,15 @@ public class DayScheduleFragment extends BaseFragment implements SearchView.OnQu
     private String date;
     private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
     private RealmResults<Session> realmResults;
+=======
+    private List<Session> mSessions = new ArrayList<>();
+    private List<Session> mSessionsFiltered = new ArrayList<>();
+    private DayScheduleAdapter dayScheduleAdapter;
+
+    private String date;
+    private CompositeDisposable compositeDisposable;
+    private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
+>>>>>>> text_align
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +97,7 @@ public class DayScheduleFragment extends BaseFragment implements SearchView.OnQu
         setHasOptionsMenu(true);
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
+<<<<<<< HEAD
         Utils.registerIfUrlValid(swipeRefreshLayout, this, this::refresh);
         setUpRecyclerView();
 
@@ -151,10 +174,89 @@ public class DayScheduleFragment extends BaseFragment implements SearchView.OnQu
                     handleVisibility();
                 });
     }
+=======
+        compositeDisposable = new CompositeDisposable();
+
+        Utils.registerIfUrlValid(swipeRefreshLayout, this, this::refresh);
+
+        dayRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        dayScheduleAdapter = new DayScheduleAdapter(mSessionsFiltered, getContext());
+        dayRecyclerView.setAdapter(dayScheduleAdapter);
+        dayScheduleAdapter.setEventDate(date);
+
+        final StickyRecyclerHeadersDecoration headersDecoration = new StickyRecyclerHeadersDecoration(dayScheduleAdapter);
+        dayRecyclerView.addItemDecoration(headersDecoration);
+        dayScheduleAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override public void onChanged() {
+                headersDecoration.invalidateHeaders();
+            }
+        });
+>>>>>>> text_align
 
     private void handleVisibility() {
         if (dayRecyclerView != null && noSchedule != null) {
             if (!filteredSessions.isEmpty()) {
+                noSchedule.setVisibility(View.GONE);
+            } else {
+                noSchedule.setVisibility(View.VISIBLE);
+            }
+        }
+<<<<<<< HEAD
+=======
+
+        realmRepo.getSessionsByDate(date, SortOrder.sortOrderSchedule(getContext()))
+                .addChangeListener((sortedSessions, orderedCollectionChangeSet) -> {
+                    mSessions.clear();
+                    mSessions.addAll(sortedSessions);
+
+                    mSessionsFiltered.clear();
+                    mSessionsFiltered.addAll(sortedSessions);
+
+                    dayScheduleAdapter.setCopy(sortedSessions);
+                    dayScheduleAdapter.notifyDataSetChanged();
+
+                    handleVisibility();
+                });
+
+        handleVisibility();
+
+        return view;
+>>>>>>> text_align
+    }
+
+    public void filter(List<String> selectedTracks) {
+        if(dayScheduleAdapter == null)
+            return;
+
+        realmRepo.getSessionsByDate(date, SortOrder.sortOrderSchedule(OpenEventApp.getAppContext()))
+                .addChangeListener((sortedSessions, orderedCollectionChangeSet) -> {
+                    mSessions.clear();
+                    mSessions.addAll(sortedSessions);
+
+                    mSessionsFiltered.clear();
+                    if (selectedTracks.isEmpty()) {
+                        mSessionsFiltered.addAll(mSessions);
+                    } else {
+                        for(int i = 0 ; i < mSessions.size() ; i++) {
+                            String trackName = mSessions.get(i).getTrack().getName();
+                            if (selectedTracks.contains(trackName)) {
+                                mSessionsFiltered.add(mSessions.get(i));
+                            }
+                        }
+
+                        if(searchText!=null)
+                            dayScheduleAdapter.filter(searchText);
+                    }
+
+                    dayScheduleAdapter.notifyDataSetChanged();
+
+                    handleVisibility();
+                });
+    }
+
+    private void handleVisibility() {
+        if (dayRecyclerView != null && noSchedule != null) {
+            if (!mSessionsFiltered.isEmpty()) {
                 noSchedule.setVisibility(View.GONE);
             } else {
                 noSchedule.setVisibility(View.VISIBLE);
@@ -172,24 +274,41 @@ public class DayScheduleFragment extends BaseFragment implements SearchView.OnQu
         super.onDestroyView();
         Utils.unregisterIfUrlValid(this);
 
+<<<<<<< HEAD
         // Remove listeners to fix memory leak
         realmResults.removeAllChangeListeners();
+=======
+        if(compositeDisposable != null && !compositeDisposable.isDisposed())
+            compositeDisposable.dispose();
+
+        // Remove listeners to fix memory leak
+>>>>>>> text_align
         if(swipeRefreshLayout != null) swipeRefreshLayout.setOnRefreshListener(null);
         if(searchView != null) searchView.setOnQueryTextListener(null);
     }
 
     @Subscribe
     public void onSessionsDownloadDone(SessionDownloadEvent event) {
+<<<<<<< HEAD
         Views.setSwipeRefreshLayout(swipeRefreshLayout, false);
 
         if (event.isState()) {
             Timber.i("Schedule download completed");
+=======
+        if(swipeRefreshLayout!=null)
+            swipeRefreshLayout.setRefreshing(false);
+        if (event.isState()) {
+>>>>>>> text_align
             if (searchView != null && !searchView.getQuery().toString().isEmpty() && !searchView.isIconified()) {
                 dayScheduleAdapter.filter(searchView.getQuery().toString());
             }
         } else {
+<<<<<<< HEAD
             Timber.i("Schedule download failed");
             if (getActivity() != null && swipeRefreshLayout != null) {
+=======
+            if (swipeRefreshLayout != null) {
+>>>>>>> text_align
                 Snackbar.make(swipeRefreshLayout, getActivity().getString(R.string.refresh_failed), Snackbar.LENGTH_LONG).setAction(R.string.retry_download, view -> refresh()).show();
             }
         }
@@ -234,17 +353,53 @@ public class DayScheduleFragment extends BaseFragment implements SearchView.OnQu
 
     private void refresh() {
         NetworkUtils.checkConnection(new WeakReference<>(getContext()), new NetworkUtils.NetworkStateReceiverListener() {
+<<<<<<< HEAD
 
             @Override
             public void networkAvailable() {
                 // Network is available
+=======
+            @Override
+            public void activeConnection() {
+                //Internet is working
+>>>>>>> text_align
                 DataDownloadManager.getInstance().downloadSession();
+            }
+
+            @Override
+<<<<<<< HEAD
+            public void networkUnavailable() {
+                OpenEventApp.getEventBus().post(new SessionDownloadEvent(false));
+            }
+=======
+            public void inactiveConnection() {
+                //Device is connected to WI-FI or Mobile Data but Internet is not working
+                //set is refreshing false as let user to login
+                if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                ShowNotificationSnackBar showNotificationSnackBar = new ShowNotificationSnackBar(getContext(),getView(),swipeRefreshLayout) {
+                    @Override
+                    public void refreshClicked() {
+                        refresh();
+                    }
+                };
+                //show snackbar will be useful if user have blocked notification for this app
+                showNotificationSnackBar.showSnackBar();
+                //show notification (Only when connected to WiFi)
+                showNotificationSnackBar.buildNotification();
+            }
+
+            @Override
+            public void networkAvailable() {
+                // Network is available but we need to wait for activity
             }
 
             @Override
             public void networkUnavailable() {
                 OpenEventApp.getEventBus().post(new SessionDownloadEvent(false));
             }
+>>>>>>> text_align
         });
     }
 }

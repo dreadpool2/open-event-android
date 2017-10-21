@@ -26,9 +26,15 @@ echo $TRAVIS_BRANCH > meta/deployment/branch
 # Create a new branch that will contains only latest apk
 git checkout --orphan latest-apk-only
 
+<<<<<<< HEAD
 # Add generated APKs
 git add -f -A
 git commit -m "Update Sample Apks generated from $TRAVIS_BRANCH branch."
+=======
+# Add generated APKs.
+git add -f .
+git commit -m "Update Sample Apk generated from $TRAVIS_BRANCH branch."
+>>>>>>> text_align
 
 # Delete current apk branch
 git branch -D apk

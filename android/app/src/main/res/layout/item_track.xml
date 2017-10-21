@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+<<<<<<< HEAD
     android:background="?attr/selectableItemBackground"
     android:baselineAligned="false"
     android:clickable="true"
@@ -16,10 +17,17 @@
         android:layout_width="@dimen/item_image_view"
         android:layout_height="@dimen/item_image_view"
         android:contentDescription="@string/item_track" />
+=======
+    android:baselineAligned="false"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+>>>>>>> text_align
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginEnd="@dimen/layout_margin_large"
         android:layout_marginLeft="@dimen/layout_margin_large"
         android:layout_marginRight="@dimen/layout_margin_large"
@@ -45,4 +53,31 @@
             android:textSize="@dimen/text_size_small"
             tools:text="No of sessions" />
     </LinearLayout>
+=======
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="@dimen/padding_large">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/item_image_view"
+            android:layout_height="@dimen/item_image_view"
+            android:contentDescription="@string/item_track" />
+
+        <TextView
+            android:id="@+id/track_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_size_large"
+            android:layout_margin="@dimen/layout_margin_large"
+            tools:text="Track Title" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_divider_height"
+        android:background="?android:attr/listDivider" />
+>>>>>>> text_align
 </LinearLayout>

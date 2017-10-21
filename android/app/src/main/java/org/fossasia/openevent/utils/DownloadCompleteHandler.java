@@ -13,7 +13,10 @@ import org.fossasia.openevent.events.DownloadEvent;
 import org.fossasia.openevent.events.EventDownloadEvent;
 import org.fossasia.openevent.events.MicrolocationDownloadEvent;
 import org.fossasia.openevent.events.SessionDownloadEvent;
+<<<<<<< HEAD
 import org.fossasia.openevent.events.SessionTypesDownloadEvent;
+=======
+>>>>>>> text_align
 import org.fossasia.openevent.events.SpeakerDownloadEvent;
 import org.fossasia.openevent.events.SponsorDownloadEvent;
 import org.fossasia.openevent.events.TracksDownloadEvent;
@@ -27,7 +30,11 @@ public class DownloadCompleteHandler {
     private Context context;
     private ProgressDialog downloadProgressDialog;
     private int counter;
+<<<<<<< HEAD
     private int eventsDone = 0;
+=======
+    private int eventsDone;
+>>>>>>> text_align
 
     private String shownMessage = "";
 
@@ -48,7 +55,10 @@ public class DownloadCompleteHandler {
 
     public DownloadCompleteHandler startListening() {
         eventHandler = new EventHandler();
+<<<<<<< HEAD
         setupProgressBar();
+=======
+>>>>>>> text_align
 
         return this;
     }
@@ -77,7 +87,10 @@ public class DownloadCompleteHandler {
     }
 
     private void notifyComplete() {
+<<<<<<< HEAD
         eventsDone = 0;
+=======
+>>>>>>> text_align
         showProgressBar(false);
         completeSubject.onComplete();
     }
@@ -207,10 +220,13 @@ public class DownloadCompleteHandler {
             onDownloadDone(event, R.string.menu_locations);
         }
 
+<<<<<<< HEAD
         @Subscribe
         public void onSessionTypesDownloadDone(SessionTypesDownloadEvent event) {
             onDownloadDone(event, R.string.session_types);
         }
+=======
+>>>>>>> text_align
     }
 
 }

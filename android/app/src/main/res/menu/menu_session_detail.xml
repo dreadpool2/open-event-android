@@ -15,11 +15,19 @@
             android:title="@string/share"
             app:showAsAction="ifRoom" />
 
+<<<<<<< HEAD
         <item
             android:id="@+id/action_add_to_calendar"
             android:icon="@drawable/ic_event_white_24dp"
             android:title="@string/add_to_calendar"
             app:showAsAction="always" />
     </group>
+=======
+    <item
+        android:id="@+id/action_add_to_calendar"
+        android:icon="@drawable/ic_event_white_24dp"
+        android:title="@string/add_to_calendar"
+        app:showAsAction="always" />
+>>>>>>> text_align
 
 </menu>

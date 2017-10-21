@@ -16,7 +16,11 @@ import org.fossasia.openevent.activities.SessionDetailActivity;
 import org.fossasia.openevent.data.Session;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.utils.ConstantStrings;
+<<<<<<< HEAD
 import org.fossasia.openevent.utils.DateConverter;
+=======
+import org.fossasia.openevent.utils.DateUtils;
+>>>>>>> text_align
 
 public class BookmarkAlarmService extends IntentService {
 
@@ -72,9 +76,15 @@ public class BookmarkAlarmService extends IntentService {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) smallIcon = R.drawable.ic_noti_bookmark;
 
         String session_timings = String.format("%s - %s",
+<<<<<<< HEAD
                 DateConverter.formatDateWithDefault(DateConverter.FORMAT_12H, session.getStartsAt()),
                 DateConverter.formatDateWithDefault(DateConverter.FORMAT_12H, session.getEndsAt()));
         session_date = DateConverter.formatDateWithDefault(DateConverter.FORMAT_DATE_COMPLETE, session.getStartsAt());
+=======
+                DateUtils.formatDateWithDefault(DateUtils.FORMAT_12H, session.getStartTime()),
+                DateUtils.formatDateWithDefault(DateUtils.FORMAT_12H, session.getEndTime()));
+        session_date = DateUtils.formatDateWithDefault(DateUtils.FORMAT_DATE_COMPLETE, session.getStartTime());
+>>>>>>> text_align
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(smallIcon)

@@ -38,8 +38,11 @@ public abstract class Urls {
     public static final String MAP = "map";
 
     public static String BASE_URL = "https://eventyay.com/api/v1/events/6";
+<<<<<<< HEAD
 
     public static String FACEBOOK_BASE_URL = "https://graph.facebook.com";
+=======
+>>>>>>> text_align
 
     public static final String BASE_GET_URL = BASE_URL + "/api/" + API_VERSION;
 

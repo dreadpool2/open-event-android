@@ -1,5 +1,12 @@
 package org.fossasia.openevent.utils;
 
+<<<<<<< HEAD
+=======
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+>>>>>>> text_align
 import org.fossasia.openevent.data.Session;
 import org.fossasia.openevent.data.Speaker;
 
@@ -13,12 +20,23 @@ public final class SortOrder {
     private static final int SORT_TYPE_FIRST = 0;
     private static final int SORT_TYPE_SECOND = 1;
     private static final int SORT_TYPE_THIRD = 2;
+<<<<<<< HEAD
+=======
+    private static final String PREF_SORT = "sortType";
+    private static SharedPreferences prefsSort;
+>>>>>>> text_align
 
     private SortOrder() {
     }
 
+<<<<<<< HEAD
     public static String sortOrderSpeaker() {
         switch (SharedPreferencesUtil.getInt(ConstantStrings.PREF_SORT_SPEAKER, 0)) {
+=======
+    public static String sortOrderSpeaker(Context context) {
+        prefsSort = PreferenceManager.getDefaultSharedPreferences(context);
+        switch (prefsSort.getInt(PREF_SORT, 0)) {
+>>>>>>> text_align
             case SORT_TYPE_FIRST:
                 //By NAME
                 return Speaker.NAME;
@@ -33,8 +51,14 @@ public final class SortOrder {
         }
     }
 
+<<<<<<< HEAD
     public static String sortOrderSchedule() {
         switch (SharedPreferencesUtil.getInt(ConstantStrings.PREF_SORT_SCHEDULE, 2)) {
+=======
+    public static String sortOrderSchedule(Context context) {
+        prefsSort = PreferenceManager.getDefaultSharedPreferences(context);
+        switch (prefsSort.getInt(PREF_SORT, 2)) {
+>>>>>>> text_align
             case SORT_TYPE_FIRST:
                 //By TITLE
                 return Session.TITLE;

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import org.fossasia.openevent.OpenEventApp;
 import org.fossasia.openevent.R;
+<<<<<<< HEAD
 import org.fossasia.openevent.data.Event;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.utils.DateConverter;
@@ -29,6 +30,9 @@ import org.fossasia.openevent.utils.Utils;
 import org.threeten.bp.format.DateTimeParseException;
 
 import timber.log.Timber;
+=======
+import org.fossasia.openevent.utils.DateUtils;
+>>>>>>> text_align
 
 /**
  * User: manan
@@ -44,6 +48,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     private Preference languagePreference;
     private AppCompatDelegate delegate;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getDelegate().installViewFactory();
@@ -52,6 +57,10 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
         overridePendingTransition(R.anim.slide_in_right, R.anim.stay_in_place);
 
+<<<<<<< HEAD
+=======
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+>>>>>>> text_align
         PreferenceManager.setDefaultValues(this,R.xml.settings,false);
         addPreferencesFromResource(R.xml.settings);
         setContentView(R.layout.activity_settings);
@@ -80,8 +89,12 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             boolean showLocalTimezone = choice.equals(true);
 
             timezonePreference.setChecked(showLocalTimezone);
+<<<<<<< HEAD
             DateConverter.setShowLocalTime(showLocalTimezone);
             updateEventDates();
+=======
+            DateUtils.setShowLocalTimeZone(showLocalTimezone);
+>>>>>>> text_align
         } else if (preference.getKey().equals(getResources().getString(R.string.notification_key))) {
             prefNotification.setSummary((String) choice);
         } else if (preference.getKey().equals(getResources().getString(R.string.language_key))) {

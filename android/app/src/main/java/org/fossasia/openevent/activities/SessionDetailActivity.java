@@ -1,10 +1,16 @@
 package org.fossasia.openevent.activities;
 
 import android.content.Intent;
+<<<<<<< HEAD
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+=======
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+>>>>>>> text_align
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,11 +19,16 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+<<<<<<< HEAD
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+=======
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+>>>>>>> text_align
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,12 +52,19 @@ import org.fossasia.openevent.adapters.SessionSpeakerListAdapter;
 import org.fossasia.openevent.data.Microlocation;
 import org.fossasia.openevent.data.Session;
 import org.fossasia.openevent.data.Speaker;
+<<<<<<< HEAD
 import org.fossasia.openevent.data.Track;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.utils.ConstantStrings;
 import org.fossasia.openevent.utils.DateConverter;
 import org.fossasia.openevent.utils.NotificationUtil;
 import org.fossasia.openevent.utils.SharedPreferencesUtil;
+=======
+import org.fossasia.openevent.dbutils.RealmDataRepository;
+import org.fossasia.openevent.utils.ConstantStrings;
+import org.fossasia.openevent.utils.DateUtils;
+import org.fossasia.openevent.utils.NotificationUtil;
+>>>>>>> text_align
 import org.fossasia.openevent.utils.StringUtils;
 import org.fossasia.openevent.utils.Utils;
 import org.fossasia.openevent.utils.Views;
@@ -71,6 +89,10 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
     private Session session;
     private Menu menu;
 
+<<<<<<< HEAD
+=======
+    private String timings;
+>>>>>>> text_align
     private static final String FRAGMENT_TAG_REST = "fgtr";
 
     @BindView(R.id.toolbar)
@@ -118,13 +140,19 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
     private static final String BY_NAME = "name";
 
     private String trackName, title, location;
+<<<<<<< HEAD
     private int trackColor, darkColor, fontColor;
+=======
+>>>>>>> text_align
     private int id;
     private List<Speaker> speakers = new ArrayList<>();
 
     private boolean isHideToolbarView = false;
     private boolean hasTrack = true;
+<<<<<<< HEAD
     private boolean showMap = false;
+=======
+>>>>>>> text_align
 
     private String loadedFlag;
 
@@ -154,7 +182,11 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
             if(session == null)
                 return;
 
+<<<<<<< HEAD
             if(session.getIsBookmarked()) {
+=======
+            if(session.isBookmarked()) {
+>>>>>>> text_align
                 Timber.tag(TAG).d("Bookmark Removed");
 
                 realmRepo.setBookmark(session.getId(), false).subscribe();
@@ -189,18 +221,30 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
 
     private void updateSession() {
         if(hasTrack)
+<<<<<<< HEAD
             setUiColor();
+=======
+            setUiColor(Color.parseColor(session.getTrack().getColor()));
+>>>>>>> text_align
 
         Timber.d("Updated");
 
         speakers.clear();
         speakers.addAll(session.getSpeakers());
         adapter.notifyDataSetChanged();
+<<<<<<< HEAD
 
         updateFloatingIcon();
 
         Microlocation microlocation = session.getMicrolocation();
 
+=======
+
+        updateFloatingIcon();
+
+        Microlocation microlocation = session.getMicrolocation();
+
+>>>>>>> text_align
         if(microlocation != null) {
             location = microlocation.getName();
             text_room1.setText(microlocation.getName());
@@ -224,7 +268,11 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
             text_track.setVisibility(View.GONE);
         }
 
+<<<<<<< HEAD
         String video_link = session.getVideoUrl();
+=======
+        String video_link = session.getVideo();
+>>>>>>> text_align
 
         if(!Utils.isEmpty(video_link)) {
             playButton.setVisibility(View.VISIBLE);
@@ -237,12 +285,26 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
                         .into(youtubeThumbnail);
             }
 
+<<<<<<< HEAD
             playButton.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video_link))));
         }
 
         String date = DateConverter.formatDateWithDefault(DateConverter.FORMAT_DATE_COMPLETE, session.getStartsAt());
         String startTime = DateConverter.formatDateWithDefault(DateConverter.FORMAT_12H, session.getStartsAt());
         String endTime = DateConverter.formatDateWithDefault(DateConverter.FORMAT_12H, session.getEndsAt());
+=======
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video_link)));
+                }
+            });
+        }
+
+        String date = DateUtils.formatDateWithDefault(DateUtils.FORMAT_DATE_COMPLETE, session.getStartTime());
+        String startTime = DateUtils.formatDateWithDefault(DateUtils.FORMAT_12H, session.getStartTime());
+        String endTime = DateUtils.formatDateWithDefault(DateUtils.FORMAT_12H, session.getEndTime());
+>>>>>>> text_align
 
         text_start_time.setText(startTime);
         text_end_time.setText(endTime);
@@ -254,8 +316,12 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
     }
 
     private void updateFloatingIcon() {
+<<<<<<< HEAD
         fabSessionBookmark.setColorFilter(fontColor, PorterDuff.Mode.SRC_ATOP);
         if(session.getIsBookmarked()) {
+=======
+        if(session.isBookmarked()) {
+>>>>>>> text_align
             Timber.tag(TAG).d("Bookmarked");
             fabSessionBookmark.setImageResource(R.drawable.ic_bookmark_white_24dp);
         } else {
@@ -264,6 +330,7 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
         }
     }
 
+<<<<<<< HEAD
     private void setUiColor() {
         toolbar.setBackgroundColor(trackColor);
 
@@ -287,11 +354,27 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
         if (Views.isCompatible(Build.VERSION_CODES.LOLLIPOP)) {
             getWindow().setStatusBarColor(darkColor);
             Views.setEdgeGlowColorScrollView(trackColor, scrollView);
+=======
+    private void setUiColor(int color) {
+        int darkColor = Views.getDarkColor(color);
+
+        toolbar.setBackgroundColor(color);
+        collapsingToolbarLayout.setBackgroundColor(color);
+        collapsingToolbarLayout.setContentScrimColor(darkColor);
+
+        if (Views.isCompatible(Build.VERSION_CODES.LOLLIPOP)) {
+            getWindow().setStatusBarColor(darkColor);
+            Views.setEdgeGlowColorScrollView(color, scrollView);
+>>>>>>> text_align
             speakersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
+<<<<<<< HEAD
                     Views.setEdgeGlowColorRecyclerView(speakersRecyclerView, trackColor);
+=======
+                    Views.setEdgeGlowColorRecyclerView(speakersRecyclerView, color);
+>>>>>>> text_align
                 }
             });
         }
@@ -317,9 +400,12 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
             if (appBarLayout.getVisibility() == View.GONE) {
                 appBarLayout.setVisibility(View.VISIBLE);
             }
+<<<<<<< HEAD
             showMap = false;
             text_title.setText(title);
             menu.setGroupVisible(R.id.menu_group_session_detail, true);
+=======
+>>>>>>> text_align
             getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
@@ -330,12 +416,16 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_map:
+<<<<<<< HEAD
                 showMap = true;
 
+=======
+>>>>>>> text_align
                 // Hide all the views except the frame layout and appbar layout
                 scrollView.setVisibility(View.GONE);
                 fabSessionBookmark.setVisibility(View.GONE);
 
+<<<<<<< HEAD
                 menu.setGroupVisible(R.id.menu_group_session_detail, false);
                 text_title.setText(" ");
                 appBarLayout.setExpanded(false);
@@ -359,6 +449,23 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
             case R.id.action_share:
                 String startTime = DateConverter.formatDateWithDefault(DateConverter.FORMAT_DATE_COMPLETE, session.getStartsAt());
                 String endTime = DateConverter.formatDateWithDefault(DateConverter.FORMAT_DATE_COMPLETE, session.getEndsAt());
+=======
+                appBarLayout.setExpanded(false);
+                mapFragment.setVisibility(View.VISIBLE);
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame_session,
+                        ((OpenEventApp) getApplication())
+                                .getMapModuleFactory()
+                                .provideMapModule()
+                                .provideMapFragment(), FRAGMENT_TAG_REST).addToBackStack(null).commit();
+                return true;
+
+            case R.id.action_share:
+                String startTime = DateUtils.formatDateWithDefault(DateUtils.FORMAT_DATE_COMPLETE, session.getStartTime());
+                String endTime = DateUtils.formatDateWithDefault(DateUtils.FORMAT_DATE_COMPLETE, session.getEndTime());
+>>>>>>> text_align
                 String shareText = String.format("Session Track: %s \n" +
                                 "Title: %s \n" +
                                 "Start Time: %s \n" +
@@ -380,8 +487,13 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
                 intent.setType("vnd.android.cursor.item/event");
                 intent.putExtra(CalendarContract.Events.TITLE, title);
                 intent.putExtra(CalendarContract.Events.DESCRIPTION, session.getShortAbstract());
+<<<<<<< HEAD
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, DateConverter.formatDateWithDefault(DateConverter.FORMAT_24H, session.getStartsAt()));
                 intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, DateConverter.formatDateWithDefault(DateConverter.FORMAT_24H, session.getEndsAt()));
+=======
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, DateUtils.formatDateWithDefault(DateUtils.FORMAT_24H, session.getStartTime()));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, DateUtils.formatDateWithDefault(DateUtils.FORMAT_24H, session.getEndTime()));
+>>>>>>> text_align
                 startActivity(intent);
 
             default:
@@ -408,21 +520,28 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
             // Collapsed
 
             linearLayout.setVisibility(View.GONE);
+<<<<<<< HEAD
             if (showMap){
                 collapsingToolbarLayout.setTitle(location);
             } else {
                 collapsingToolbarLayout.setTitle(title);
             }
+=======
+            collapsingToolbarLayout.setTitle(title);
+>>>>>>> text_align
             isHideToolbarView = !isHideToolbarView;
         } else if (percentage < 1f && !isHideToolbarView) {
             // Not Collapsed
 
             collapsingToolbarLayout.setTitle(" ");
+<<<<<<< HEAD
             if (showMap){
                 text_title.setText(location);
             } else {
                 text_title.setText(title);
             }
+=======
+>>>>>>> text_align
             text_title.setMaxLines(2);
             linearLayout.setVisibility(View.VISIBLE);
             isHideToolbarView = !isHideToolbarView;
@@ -433,6 +552,7 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
     protected void onResume() {
         super.onResume();
 
+<<<<<<< HEAD
         id = getIntent().getIntExtra(ConstantStrings.ID, 0);
         title = getIntent().getStringExtra(ConstantStrings.SESSION);
         trackName = getIntent().getStringExtra(ConstantStrings.TRACK);
@@ -446,11 +566,29 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
                 loadedFlag = BY_ID;
                 SharedPreferencesUtil.putInt(ConstantStrings.SESSION_MAP_ID, id);
                 loadSession(loadedSession);
+=======
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        sessionById = realmRepo.getSession(id);
+        sessionById.addChangeListener((RealmChangeListener<Session>) loadedSession -> {
+            if(!loadedSession.isValid())
+                return;
+
+            if(loadedFlag == null || loadedFlag.equals(BY_ID)) {
+
+                loadedFlag = BY_ID;
+
+                session = loadedSession;
+
+                sharedPreferences.edit().putInt(ConstantStrings.SESSION_MAP_ID, id).apply();
+                updateSession();
+>>>>>>> text_align
             }
         });
 
         sessionByName = realmRepo.getSession(title);
         sessionByName.addChangeListener((RealmChangeListener<Session>) loadedSession -> {
+<<<<<<< HEAD
             if (!loadedSession.isValid())
                 return;
 
@@ -458,10 +596,24 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
                 loadedFlag = BY_NAME;
                 SharedPreferencesUtil.putInt(ConstantStrings.SESSION_MAP_ID, -1);
                 loadSession(loadedSession);
+=======
+            if(!loadedSession.isValid())
+                return;
+
+            if(loadedFlag == null || loadedFlag.equals(BY_NAME)) {
+
+                loadedFlag = BY_NAME;
+
+                session = loadedSession;
+
+                sharedPreferences.edit().putInt(ConstantStrings.SESSION_MAP_ID, -1).apply();
+                updateSession();
+>>>>>>> text_align
             }
         });
     }
 
+<<<<<<< HEAD
     private void loadSession(Session session) {
         this.session = session;
         this.trackColor = Color.parseColor(session.getTrack().getColor());
@@ -481,6 +633,12 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
     protected void onStop() {
         super.onStop();
 
+=======
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+>>>>>>> text_align
         if(sessionById != null) sessionById.removeAllChangeListeners();
         if(sessionByName != null) sessionByName.removeAllChangeListeners();
     }

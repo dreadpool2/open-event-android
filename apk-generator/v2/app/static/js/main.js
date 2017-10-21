@@ -32,6 +32,7 @@ var identifier = null,
     pollingWorker = null,
     downloadUrl = null;
 
+<<<<<<< HEAD
 var menuDisplay = false;
 
 $(".custom-menubutton").click(function() {
@@ -47,6 +48,8 @@ $(".custom-menubutton").click(function() {
     menuDisplay = !menuDisplay;
 });
 
+=======
+>>>>>>> text_align
 /**
  * Enable the generate button
  *
@@ -88,7 +91,11 @@ $buildTypeRadio.change(
 
 $apiEndpointInput.valueChange(function (value) {
     if (dataSourceType === "api_endpoint") {
+<<<<<<< HEAD
         if (buildType !== null && value.trim() !== "" && isLink(value.trim())) {
+=======
+        if (value.trim() !== "" && isLink(value.trim())) {
+>>>>>>> text_align
             enableGenerateButton(true);
         } else {
             enableGenerateButton(false);
@@ -99,7 +106,11 @@ $apiEndpointInput.valueChange(function (value) {
 $jsonUploadInput.change(function () {
     if (dataSourceType === "json_upload") {
         $fileProgressBar.css("width", 0);
+<<<<<<< HEAD
         if (buildType !== null && this.value !== "") {
+=======
+        if (this.value !== "") {
+>>>>>>> text_align
             enableGenerateButton(true);
         } else {
             enableGenerateButton(false);
@@ -257,6 +268,7 @@ $form.submit(function (e) {
     var data = new FormData();
     data.append("email", $emailInput.val());
     data.append("data-source", dataSourceType);
+<<<<<<< HEAD
     data.append("build-type", buildType);
     data.append("is-auth-enabled", $authOptionCheckbox.is(":checked"));
     data.append("colors", JSON.stringify({
@@ -264,6 +276,8 @@ $form.submit(function (e) {
         'primary_dark': $colorPrimaryDark.colorpicker('getValue'),
         'accent': $colorAccent.colorpicker('getValue')
     }));
+=======
+>>>>>>> text_align
 
     var config = {};
 

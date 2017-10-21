@@ -6,12 +6,20 @@ import org.fossasia.openevent.OpenEventApp;
 import org.fossasia.openevent.data.Event;
 import org.fossasia.openevent.data.Microlocation;
 import org.fossasia.openevent.data.Session;
+<<<<<<< HEAD
 import org.fossasia.openevent.data.SessionType;
 import org.fossasia.openevent.data.Speaker;
 import org.fossasia.openevent.data.Sponsor;
 import org.fossasia.openevent.data.Track;
 import org.fossasia.openevent.data.auth.User;
 import org.fossasia.openevent.data.extras.EventDates;
+=======
+import org.fossasia.openevent.data.Speaker;
+import org.fossasia.openevent.data.Sponsor;
+import org.fossasia.openevent.data.Track;
+import org.fossasia.openevent.data.extras.EventDates;
+import org.fossasia.openevent.data.extras.Version;
+>>>>>>> text_align
 import org.fossasia.openevent.events.BookmarkChangedEvent;
 
 import java.util.HashMap;
@@ -65,6 +73,7 @@ public class RealmDataRepository {
         return realm;
     }
 
+<<<<<<< HEAD
     //User Section
 
     private void saveUserInRealm(User user) {
@@ -127,6 +136,19 @@ public class RealmDataRepository {
     }
 
 
+=======
+    private void clearRealmDatabaseVersions() {
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransaction(realm1 -> realm1.delete(Version.class));
+        realm.close();
+    }
+
+    public Completable clearVersions() {
+        return Completable.fromAction(this::clearRealmDatabaseVersions);
+    }
+
+>>>>>>> text_align
     // Events Section
 
     private void saveEventInRealm(Event event) {
@@ -166,6 +188,19 @@ public class RealmDataRepository {
         return realm.where(Event.class).findFirst();
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Returns Future of the stored version IDs of event components
+     * @return Version IDs of different Event Components
+     */
+    public Version getVersionIdsSync() {
+        Realm realm = Realm.getDefaultInstance();
+
+        return realm.where(Version.class).findFirst();
+    }
+
+>>>>>>> text_align
     // Tracks Section
 
     /**
@@ -263,8 +298,13 @@ public class RealmDataRepository {
             for(Session session : sessions) {
                 // If session was previously bookmarked, set this one too
                 Session storedSession = transaction.where(Session.class).equalTo("id", session.getId()).findFirst();
+<<<<<<< HEAD
                 if(storedSession != null && storedSession.getIsBookmarked())
                     session.setIsBookmarked(true);
+=======
+                if(storedSession != null && storedSession.isBookmarked())
+                    session.setBookmarked(true);
+>>>>>>> text_align
 
                 List<Speaker> speakers = session.getSpeakers();
 
@@ -340,7 +380,11 @@ public class RealmDataRepository {
             realm1.where(Session.class)
                     .equalTo("id", sessionId)
                     .findFirst()
+<<<<<<< HEAD
                     .setIsBookmarked(bookmark);
+=======
+                    .setBookmarked(bookmark);
+>>>>>>> text_align
 
             OpenEventApp.postEventOnUIThread(new BookmarkChangedEvent());
             realm1.commitTransaction();
@@ -374,11 +418,19 @@ public class RealmDataRepository {
         return realm.where(Session.class)
                 .equalTo("track.id", trackId)
                 .like("title", wildcardQuery, Case.INSENSITIVE)
+<<<<<<< HEAD
                 .findAllSorted("startsAt");
     }
 
     public RealmResults<Session> getSessionsByLocation(String location) {
         return realm.where(Session.class).equalTo("microlocation.name", location).findAllSortedAsync(Session.START_TIME);
+=======
+                .findAllSorted("startTime");
+    }
+
+    public RealmResults<Session> getSessionsByLocation(String location) {
+        return realm.where(Session.class).equalTo("microlocation.name", location).findAllAsync();
+>>>>>>> text_align
     }
 
     public RealmResults<Session> getSessionsByDate(String date, String sortCriteria) {
@@ -398,12 +450,17 @@ public class RealmDataRepository {
         return realm.where(Session.class).equalTo("isBookmarked", true).findAllAsync();
     }
 
+<<<<<<< HEAD
     public List<Session> getBookMarkedSessionsSync() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Session> sessions = realm.where(Session.class).equalTo("isBookmarked", true).findAll();
         List<Session> list = realm.copyFromRealm(sessions);
         realm.close();
         return list;
+=======
+    public RealmResults<Session> getBookMarkedSessionsSync() {
+        return realm.where(Session.class).equalTo("isBookmarked", true).findAll();
+>>>>>>> text_align
     }
 
     // Speakers Section
@@ -435,7 +492,11 @@ public class RealmDataRepository {
                         }
                     }
 
+<<<<<<< HEAD
                     speaker.setSessions(newSessions);
+=======
+                    speaker.setSession(newSessions);
+>>>>>>> text_align
                 }
 
                 transaction.insertOrUpdate(speaker);
@@ -514,6 +575,7 @@ public class RealmDataRepository {
         return realm.where(Microlocation.class).findAllSorted("name");
     }
 
+<<<<<<< HEAD
     //Session Types Section
 
     private void saveSessionTypesInRealm(List<SessionType> sessionTypes) {
@@ -537,6 +599,8 @@ public class RealmDataRepository {
         return realm.where(SessionType.class).findAllSorted("name");
     }
 
+=======
+>>>>>>> text_align
     // Dates Section
 
     /**
@@ -559,10 +623,13 @@ public class RealmDataRepository {
         return realm.where(EventDates.class).findAllAsync();
     }
 
+<<<<<<< HEAD
     public RealmResults<EventDates> getEventDatesSync(){
         return realm.where(EventDates.class).findAll();
     }
 
+=======
+>>>>>>> text_align
     /**
      * Compacts the database to save space
      * Should be called when exiting application to ensure

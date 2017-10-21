@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+<<<<<<< HEAD
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -16,6 +17,11 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.jakewharton.threetenabp.AndroidThreeTen;
+=======
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.jakewharton.picasso.OkHttp3Downloader;
+>>>>>>> text_align
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.squareup.otto.Bus;
@@ -31,9 +37,14 @@ import org.fossasia.openevent.events.ShowNetworkDialogEvent;
 import org.fossasia.openevent.modules.MapModuleFactory;
 import org.fossasia.openevent.receivers.NetworkConnectivityChangeReceiver;
 import org.fossasia.openevent.utils.ConstantStrings;
+<<<<<<< HEAD
 import org.fossasia.openevent.utils.DateConverter;
 import org.fossasia.openevent.utils.SharedPreferencesUtil;
 import org.fossasia.openevent.utils.Utils;
+=======
+import org.fossasia.openevent.utils.Utils;
+import org.fossasia.openevent.utils.DateUtils;
+>>>>>>> text_align
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,21 +67,34 @@ import timber.log.Timber;
  */
 public class OpenEventApp extends MultiDexApplication {
 
+<<<<<<< HEAD
     public static final String API_LINK = "api-link";
     public static final String EMAIL = "email";
     public static final String APP_NAME = "app-name";
     public static final String AUTH_OPTION = "is-auth-enabled";
 
     public static String defaultSystemLanguage;
+=======
+    public static final String API_LINK = "Api_Link";
+    public static final String EMAIL = "Email";
+    public static final String APP_NAME = "App_Name";
+
+    public static String sDefSystemLanguage;
+>>>>>>> text_align
     private static Handler handler;
     private static Bus eventBus;
     private static WeakReference<Context> context;
     public static Picasso picassoWithCache;
+<<<<<<< HEAD
     private static TextDrawable.IShapeBuilder textDrawableBuilder;
     private static ObjectMapper objectMapper;
     private MapModuleFactory mapModuleFactory;
     private RefWatcher refWatcher;
     private MainActivity activity;
+=======
+    private MapModuleFactory mapModuleFactory;
+    private RefWatcher refWatcher;
+>>>>>>> text_align
 
     public static Bus getEventBus() {
         if (eventBus == null) {
@@ -92,6 +116,7 @@ public class OpenEventApp extends MultiDexApplication {
         return application.refWatcher;
     }
 
+<<<<<<< HEAD
     public static ObjectMapper getObjectMapper(){
         if (objectMapper == null){
             objectMapper = new ObjectMapper();
@@ -109,6 +134,10 @@ public class OpenEventApp extends MultiDexApplication {
 
     public void setUpTimeZone() {
         DateConverter.setShowLocalTime(SharedPreferencesUtil.getBoolean(getResources()
+=======
+    public void setUpTimeZone(SharedPreferences sharedPreferences) {
+        DateUtils.setShowLocalTimeZone(sharedPreferences.getBoolean(getResources()
+>>>>>>> text_align
                 .getString(R.string.timezone_mode_key), false));
     }
 
@@ -120,6 +149,7 @@ public class OpenEventApp extends MultiDexApplication {
 
         Branch.getAutoInstance(this);
 
+<<<<<<< HEAD
         setUpTimeZone();
         defaultSystemLanguage = Locale.getDefault().getDisplayLanguage();
 
@@ -140,6 +170,32 @@ public class OpenEventApp extends MultiDexApplication {
         refWatcher = LeakCanary.install(this);
 
         AndroidThreeTen.init(this);
+
+        //Initialize Cache
+        File httpCacheDirectory = new File(getCacheDir(), "picasso-cache");
+        Cache cache = new Cache(httpCacheDirectory, 15 * 1024 * 1024);
+
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder().cache(cache);
+=======
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getAppContext());
+        setUpTimeZone(sharedPreferences);
+        sDefSystemLanguage = Locale.getDefault().getDisplayLanguage();
+>>>>>>> text_align
+
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .schemaVersion(RealmDatabaseMigration.DB_VERSION) // Must be bumped when the schema changes
+                .migration(new RealmDatabaseMigration()) // Migration to run instead of throwing an exception
+                .build();
+
+        Realm.setDefaultConfiguration(config);
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        refWatcher = LeakCanary.install(this);
 
         //Initialize Cache
         File httpCacheDirectory = new File(getCacheDir(), "picasso-cache");
@@ -203,6 +259,7 @@ public class OpenEventApp extends MultiDexApplication {
             SharedPreferencesUtil.putString(ConstantStrings.BASE_API_URL, apiLink);
             SharedPreferencesUtil.putBoolean(ConstantStrings.IS_AUTH_ENABLED, isAuthEnabled);
 
+<<<<<<< HEAD
             if (extractEventIdFromApiLink(apiLink) != 0)
                 SharedPreferencesUtil.putInt(ConstantStrings.EVENT_ID, extractEventIdFromApiLink(apiLink));
         } catch (JSONException e) {
@@ -228,10 +285,16 @@ public class OpenEventApp extends MultiDexApplication {
             String eventTimeZone = jsonObject.has(ConstantStrings.TIMEZONE) ? jsonObject.getString(ConstantStrings.TIMEZONE) : "";
             SharedPreferencesUtil.putString(ConstantStrings.ORG_DESCRIPTION, org_description);
             SharedPreferencesUtil.putString(ConstantStrings.TIMEZONE, eventTimeZone);
+=======
+            sharedPreferences.edit().putString(ConstantStrings.EMAIL, email).apply();
+            sharedPreferences.edit().putString(ConstantStrings.APP_NAME, app_name).apply();
+            sharedPreferences.edit().putString(ConstantStrings.BASE_API_URL, api_link).apply();
+>>>>>>> text_align
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+<<<<<<< HEAD
         if (!Utils.isBaseUrlEmpty()) {
             registerReceiver(new NetworkConnectivityChangeReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         }
@@ -250,6 +313,34 @@ public class OpenEventApp extends MultiDexApplication {
 
     public void detachMainActivity() {
         this.activity = null;
+=======
+        //getting event data
+        try {
+            InputStream inputStream = getAssets().open("event");
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            event_json = new String(buffer, "UTF-8");
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject jsonObject = new JSONObject(event_json);
+            String org_description = jsonObject.has(ConstantStrings.ORG_DESCRIPTION) ?
+                    jsonObject.getString(ConstantStrings.ORG_DESCRIPTION) : "";
+            String eventTimeZone = jsonObject.has(ConstantStrings.TIMEZONE) ? jsonObject.getString(ConstantStrings.TIMEZONE) : "";
+            sharedPreferences.edit().putString(ConstantStrings.ORG_DESCRIPTION, org_description).apply();
+            sharedPreferences.edit().putString(ConstantStrings.TIMEZONE, eventTimeZone).apply();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!Utils.isBaseUrlEmpty()) {
+            registerReceiver(new NetworkConnectivityChangeReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
+>>>>>>> text_align
     }
 
     @Subscribe
@@ -257,8 +348,13 @@ public class OpenEventApp extends MultiDexApplication {
         if (event.connState()) {
             Timber.d("[NetNotif] %s", "Connected to Internet");
 
+<<<<<<< HEAD
             if(activity != null)
                 activity.dismissDialogNetworkNotification();
+=======
+            if(MainActivity.dialogNetworkNotiff != null)
+                MainActivity.dialogNetworkNotiff.dismiss();
+>>>>>>> text_align
 
         } else {
             Timber.d("[NetNotif] %s", "Not connected to Internet");

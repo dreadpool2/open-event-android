@@ -4,7 +4,11 @@ from app.utils.libs.request_context_task import RequestContextTask
 
 
 @celery.task(base=RequestContextTask, name='generate.app', bind=True)
+<<<<<<< HEAD
 def generate_app_task(self, config, payload, via_api=False, identifier=None, build_type=None, theme_colors=None):
+=======
+def generate_app_task(self, config, payload, via_api=False, identifier=None):
+>>>>>>> text_align
     """
     The celery task that starts the generator
     :param self:

@@ -4,20 +4,29 @@
 
     <!--view specifics -->
     <dimen name="view_height">1dp</dimen>
+<<<<<<< HEAD
     <dimen name="home_screen_divider_width">2dp</dimen>
     <dimen name="profile_menu_height">72dp</dimen>
+=======
+>>>>>>> text_align
 
     <!--image view specifics -->
     <dimen name="item_image_view_small">24dp</dimen>
     <dimen name="item_image_view">50dp</dimen>
     <dimen name="item_image_view_large">130dp</dimen>
     <dimen name="item_image_view_extra_large">250dp</dimen>
+<<<<<<< HEAD
     <dimen name="home_logo_width">200dp</dimen>
+=======
+>>>>>>> text_align
 
     <!--card view specifics -->
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_corner_radius">0dp</dimen>
+<<<<<<< HEAD
     <dimen name="card_width">200dp</dimen>
+=======
+>>>>>>> text_align
 
     <!-- list divider specifics -->
     <dimen name="list_divider_height">0.8dp</dimen>
@@ -26,7 +35,11 @@
     <dimen name="bookmark_widget_height">48dp</dimen>
     <dimen name="bookmark_image_view_width">30dp</dimen>
     <dimen name="bookmark_image_view_height">30dp</dimen>
+<<<<<<< HEAD
     <dimen name="bookmark_divider_height">0.8dp</dimen>
+=======
+    <dimen name="bookmark_divider_height">2dp</dimen>
+>>>>>>> text_align
 
     <!--speaker section specifics -->
     <dimen name="speaker_view_scrim_top">150dp</dimen>
@@ -42,13 +55,20 @@
 
     <!-- text size -->
     <dimen name="heading_text_size">20sp</dimen>
+<<<<<<< HEAD
     <dimen name="text_size_expanded_title">22sp</dimen>
+=======
+>>>>>>> text_align
     <dimen name="text_size_extra_large">18sp</dimen>
     <dimen name="text_size_large">16sp</dimen>
     <dimen name="text_size_medium">14sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
 
+<<<<<<< HEAD
     <!--tab layout specifics -->
+=======
+    <!--tab layout sepcifics -->
+>>>>>>> text_align
     <dimen name="tab_min_width">100dp</dimen>
     <dimen name="tab_max_width">150dp</dimen>
     <dimen name="tab_indicator_height">3dp</dimen>
@@ -66,7 +86,10 @@
     <dimen name="layout_margin_extra_large">32dp</dimen>
     <dimen name="top_progressbar_margin">-10dp</dimen>
     <dimen name="bottom_progressbar_margin">-6dp</dimen>
+<<<<<<< HEAD
     <dimen name="session_status_margin">60dp</dimen>
+=======
+>>>>>>> text_align
 
     <!-- padding specifics -->
     <dimen name="padding_extra_small">2dp</dimen>
@@ -75,6 +98,7 @@
     <dimen name="padding_large">16dp</dimen>
     <dimen name="padding_extra_large">32dp</dimen>
 
+<<<<<<< HEAD
     <dimen name="medium_width">300dp</dimen>
 
     <!--Track Tag-->
@@ -98,4 +122,11 @@
     <dimen name="upcoming_title_height">50dp</dimen>
     <dimen name="upcoming_height">70dp</dimen>
     <dimen name="upcoming_margin_left">30dp</dimen>
+=======
+    <!--NavBar-->
+    <dimen name="nav_bar_width">300dp</dimen>
+
+    <!--Track Tag-->
+    <dimen name="track_tag_height">30dp</dimen>
+>>>>>>> text_align
 </resources>

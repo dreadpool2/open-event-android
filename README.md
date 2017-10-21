@@ -33,6 +33,7 @@ A sample app for testing purposes is automatically built after commits in the re
 ### Screenshots of a sample Android app
 
 <p align="center">
+<<<<<<< HEAD
 <img src="docs/_static/images/app-bookmarks-and-home.png" height = "480" width="270"> <img src="docs/_static/images/app-drawer.png" height = "480" width="270"> <img src="docs/_static/images/app-schedule.png" height = "480" width="270">
 </p>
 
@@ -54,6 +55,21 @@ A sample app for testing purposes is automatically built after commits in the re
 
 <p align="center">
 <img src="docs/_static/images/app-user-sign-up.png" height = "480" width="270"> <img src="docs/_static/images/app-user-log-in.png" height = "480" width="270"> <img src="docs/_static/images/app-user-profile.png" height = "480" width="270">
+=======
+<img src="docs/images/app-drawer.png" height = "480" width="270"> <img src="docs/images/app-tracks.png" height = "480" width="270"> <img src="docs/images/app-schedule.png" height = "480" width="270">
+</p>
+
+<p align="center">
+<img src="docs/images/app-speakers.png" height = "480" width="270"> <img src="docs/images/app-sponsors.png" height = "480" width="270"> <img src="docs/images/app-locations.png" height = "480" width="270">
+</p>
+
+<p align="center">
+<img src="docs/images/app-speaker-detail.png" height = "480" width="270"> <img src="docs/images/app-location-detail.png" height = "480" width="270"> <img src="docs/images/app-event-detail.png" height = "480" width="270">
+</p>
+
+<p align="center">
+<img src="docs/images/app-map.png" height = "480" width="270"> <img src="docs/images/app-settings.png" height = "480" width="270"> <img src="docs/images/app-invite.png" height = "480" width="270">
+>>>>>>> text_align
 </p>
 
 ### Android App Development Set up
@@ -125,8 +141,11 @@ Installation instructions for Digital Ocean servers are [here](docs/installation
 #### How to install The Open Event Android App Generator on Docker
 
 Installation instructions for docker are [here](docs/installation/docker.md).
+<<<<<<< HEAD
 
 **Note: You will need to install Lombok Plugin in Android Studio in order to properly access generated methods of data classes**
+=======
+>>>>>>> text_align
 
 ## Contributions, Bug Reports, Feature Requests
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/touch_selector_white">
+
+    <TextView
+        android:id="@+id/title_widget_bookmarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_extra_large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/primary_text"
+        tools:text="Bookmark Title" />
+
+    <TextView
+        android:id="@+id/date_widget_bookmarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_alignEnd="@+id/title_widget_bookmarks"
+        android:layout_alignRight="@+id/title_widget_bookmarks"
+        android:layout_below="@+id/title_widget_bookmarks"
+        android:textColor="@color/secondary_text"
+        tools:text="Fri, 17 March 2017" />
+
+    <TextView
+        android:id="@+id/time_widget_bookmarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_alignEnd="@+id/date_widget_bookmarks"
+        android:layout_alignLeft="@+id/date_widget_bookmarks"
+        android:layout_alignRight="@+id/date_widget_bookmarks"
+        android:layout_alignStart="@+id/date_widget_bookmarks"
+        android:layout_below="@+id/date_widget_bookmarks"
+        android:layout_marginBottom="@dimen/layout_margin_small"
+        android:textColor="@color/secondary_text"
+        tools:text="23:05, GMT +8:00" />
+
+</RelativeLayout>

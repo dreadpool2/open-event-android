@@ -1,5 +1,6 @@
 package org.fossasia.openevent.fragments;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -25,11 +26,11 @@ import org.fossasia.openevent.R;
 import org.fossasia.openevent.adapters.LocationsListAdapter;
 import org.fossasia.openevent.api.DataDownloadManager;
 import org.fossasia.openevent.data.Microlocation;
-import org.fossasia.openevent.dbutils.RealmDataRepository;
 import org.fossasia.openevent.events.MicrolocationDownloadEvent;
 import org.fossasia.openevent.utils.NetworkUtils;
 import org.fossasia.openevent.utils.Utils;
 import org.fossasia.openevent.utils.Views;
+import org.fossasia.openevent.viewmodels.LocationsFragmentViewModel;
 import org.fossasia.openevent.views.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.lang.ref.WeakReference;
@@ -37,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import io.realm.RealmResults;
 import timber.log.Timber;
 
 /**
@@ -48,18 +48,22 @@ public class LocationsFragment extends BaseFragment implements SearchView.OnQuer
 
     final private String SEARCH = "searchText";
 
-    @BindView(R.id.locations_swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.list_locations) RecyclerView locationsRecyclerView;
-    @BindView(R.id.txt_no_microlocations) TextView noMicrolocationsView;
+    @BindView(R.id.locations_swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.list_locations)
+    protected RecyclerView locationsRecyclerView;
+    @BindView(R.id.txt_no_microlocations)
+    protected TextView noMicrolocationsView;
+    @BindView(R.id.txt_no_result_locations)
+    protected TextView noResultsView;
 
     private List<Microlocation> locations = new ArrayList<>();
     private LocationsListAdapter locationsListAdapter;
-    
+
     private String searchText = "";
     private SearchView searchView;
 
-    private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
-    private RealmResults<Microlocation> realmResults;
+    private LocationsFragmentViewModel locationsFragmentViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,20 +74,18 @@ public class LocationsFragment extends BaseFragment implements SearchView.OnQuer
         Utils.registerIfUrlValid(swipeRefreshLayout, this, this::refresh);
         setUpRecyclerView();
 
-        if (savedInstanceState != null && savedInstanceState.getString(SEARCH) != null) {
-            searchText = savedInstanceState.getString(SEARCH);
-        }
-
-        realmResults = realmRepo.getLocations();
-        realmResults.addChangeListener((microlocations, orderedCollectionChangeSet) -> {
-            this.locations.clear();
-            this.locations.addAll(microlocations);
+        //set up view model
+        locationsFragmentViewModel = ViewModelProviders.of(this).get(LocationsFragmentViewModel.class);
+        searchText = locationsFragmentViewModel.getSearchText();
+        locationsFragmentViewModel.getLocations().observe(LocationsFragment.this, microlocations -> {
+            locations.clear();
+            locations.addAll(microlocations);
 
             locationsListAdapter.setCopyOfTracks(microlocations);
             locationsListAdapter.notifyDataSetChanged();
             if (!Utils.isEmpty(searchText))
                 locationsListAdapter.filter(searchText);
-            handleVisibility();
+            LocationsFragment.this.handleVisibility();
         });
 
         handleVisibility();
@@ -136,8 +138,8 @@ public class LocationsFragment extends BaseFragment implements SearchView.OnQuer
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
-        if (isAdded() && searchView != null) {
-            bundle.putString(SEARCH, searchText);
+        if (isAdded() && searchView != null && locationsFragmentViewModel != null) {
+            locationsFragmentViewModel.setSearchText(searchText);
         }
         super.onSaveInstanceState(bundle);
     }
@@ -165,6 +167,8 @@ public class LocationsFragment extends BaseFragment implements SearchView.OnQuer
         locationsListAdapter.filter(query);
 
         searchText = query;
+        Utils.displayNoResults(noResultsView, locationsRecyclerView, noMicrolocationsView, locationsListAdapter.getItemCount());
+
         return true;
     }
 
@@ -180,23 +184,8 @@ public class LocationsFragment extends BaseFragment implements SearchView.OnQuer
         Utils.unregisterIfUrlValid(this);
 
         // Remove listeners to fix memory leak
-        realmResults.removeAllChangeListeners();
-        if(swipeRefreshLayout != null) swipeRefreshLayout.setOnRefreshListener(null);
-        if(searchView != null) searchView.setOnQueryTextListener(null);
-    }
-
-    @Subscribe
-    public void onLocationsDownloadDone(MicrolocationDownloadEvent event) {
-        Views.setSwipeRefreshLayout(swipeRefreshLayout, false);
-
-        if (event.isState()) {
-            Timber.d("Locations download completed");
-        } else {
-            Timber.d("Locations download failed");
-            if (getActivity() != null && swipeRefreshLayout != null) {
-                Snackbar.make(swipeRefreshLayout, getActivity().getString(R.string.refresh_failed), Snackbar.LENGTH_LONG).setAction(R.string.retry_download, view -> refresh()).show();
-            }
-        }
+        if (swipeRefreshLayout != null) swipeRefreshLayout.setOnRefreshListener(null);
+        if (searchView != null) searchView.setOnQueryTextListener(null);
     }
 
     private void refresh() {

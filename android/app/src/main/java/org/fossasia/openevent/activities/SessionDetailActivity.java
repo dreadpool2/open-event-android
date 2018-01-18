@@ -358,16 +358,20 @@ public class SessionDetailActivity extends BaseActivity implements AppBarLayout.
                 return true;
 
             case R.id.action_share:
+                String speakers = "";
+                for(int i = 0; i < session.getSpeakers().size(); i++){
+                    speakers +=  ((i == 0)?(""):(", ")) + session.getSpeakers().get(i).getName();
+                }
                 String startTime = DateConverter.formatDateWithDefault(DateConverter.FORMAT_DATE_COMPLETE, session.getStartsAt());
                 String endTime = DateConverter.formatDateWithDefault(DateConverter.FORMAT_DATE_COMPLETE, session.getEndsAt());
-                String shareText = String.format("Session Track: %s \n" +
-                                "Title: %s \n" +
-                                "Start Time: %s \n" +
-                                "End Time: %s\n" +
-                                "Speakers: %s\n" +
-                                "Location: %s",
-                        trackName, title, startTime, endTime, StringUtils.join(speakers, ", "), location) +
-                        "\nDescription: " + Views.fromHtml(session.getLongAbstract());
+                String shareText = String.format(getResources().getString(R.string.session_track_details) + "%s \n" +
+                                getResources().getString(R.string.title_details) + " %s \n" +
+                                getResources().getString(R.string.start_time_details) + " %s \n" +
+                                getResources().getString(R.string.end_time_details) + " %s \n" +
+                                getResources().getString(R.string.speakers_details) + " %s \n" +
+                                getResources().getString(R.string.location_details) + " %s ",
+                        trackName, title, startTime, endTime, speakers, location) +
+                        "\n"+getResources().getString(R.string.description_details) + " " + Views.fromHtml(session.getShortAbstract());
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);

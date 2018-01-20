@@ -3,7 +3,7 @@ package org.fossasia.openevent.viewmodels;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
-import org.fossasia.openevent.data.Microlocation;
+import org.fossasia.openevent.data.Track;
 import org.fossasia.openevent.dbutils.FilterableRealmLiveData;
 import org.fossasia.openevent.dbutils.RealmDataRepository;
 
@@ -12,20 +12,21 @@ import java.util.Locale;
 
 import io.reactivex.functions.Predicate;
 
-public class LocationsFragmentViewModel extends ViewModel {
+public class TracksFragmentViewModel extends ViewModel {
 
-    private FilterableRealmLiveData<Microlocation> filterableRealmLiveData;
+    private FilterableRealmLiveData<Track> filterableRealmLiveData;
+
     private String searchText = "";
 
-    public LocationsFragmentViewModel() {
-        filterableRealmLiveData = RealmDataRepository.asFilterableLiveData(RealmDataRepository.getDefaultInstance().getLocations());
+    public TracksFragmentViewModel() {
+        filterableRealmLiveData = RealmDataRepository.asFilterableLiveData(RealmDataRepository.getDefaultInstance().getTracks());
     }
 
-    public LiveData<List<Microlocation>> getLocations(String searchText) {
+    public LiveData<List<Track>> getTracks(String searchText) {
         if (!this.searchText.equals(searchText)) {
             setSearchText(searchText);
             final String query = searchText.toLowerCase(Locale.getDefault());
-            Predicate<Microlocation> predicate = location -> location.getName()
+            Predicate<Track> predicate = track -> track.getName()
                     .toLowerCase(Locale.getDefault())
                     .contains(query);
             filterableRealmLiveData.filter(predicate);
@@ -40,4 +41,5 @@ public class LocationsFragmentViewModel extends ViewModel {
     public void setSearchText(String searchText) {
         this.searchText = searchText;
     }
+
 }

@@ -68,6 +68,7 @@ public class SpeakersListFragment extends BaseFragment implements SearchView.OnQ
     private int sortType;
 
     private SpeakersListFragmentViewModel speakersListFragmentViewModel;
+    private RecyclerView.AdapterDataObserver adapterDataObserver;
 
     @Nullable
     @Override
@@ -98,29 +99,27 @@ public class SpeakersListFragment extends BaseFragment implements SearchView.OnQ
         final int spanCount = (int) (width / 150.00);
         gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
 
-        speakersListAdapter = new SpeakersListAdapter(speakers, getActivity());
+        speakersListAdapter = new SpeakersListAdapter(speakers);
 
         speakersRecyclerView.setHasFixedSize(true);
         speakersRecyclerView.setAdapter(speakersListAdapter);
         speakersRecyclerView.setLayoutManager(gridLayoutManager);
         final StickyRecyclerHeadersDecoration headersDecoration = new StickyRecyclerHeadersDecoration(speakersListAdapter);
         speakersRecyclerView.addItemDecoration(headersDecoration);
-        speakersListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        adapterDataObserver = new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 headersDecoration.invalidateHeaders();
             }
-        });
+        };
+        speakersListAdapter.registerAdapterDataObserver(adapterDataObserver);
     }
 
     private void loadData() {
-        speakersListFragmentViewModel.getSpeakers().observe(this,speakersList ->{
+        speakersListFragmentViewModel.getSpeakers(sortType, searchText).observe(this,speakersList ->{
             speakers.clear();
             speakers.addAll(speakersList);
-            speakersListAdapter.setCopyOfSpeakers(speakersList);
             speakersListAdapter.notifyDataSetChanged();
-            if (!Utils.isEmpty(searchText))
-                speakersListAdapter.filter(searchText);
             handleVisibility();
         });
     }
@@ -144,6 +143,7 @@ public class SpeakersListFragment extends BaseFragment implements SearchView.OnQ
     public void onDestroyView() {
         super.onDestroyView();
         Utils.unregisterIfUrlValid(this);
+        speakersListAdapter.unregisterAdapterDataObserver(adapterDataObserver);
 
         // Remove listeners to fix memory leak
         if(swipeRefreshLayout != null) swipeRefreshLayout.setOnRefreshListener(null);
@@ -249,7 +249,8 @@ public class SpeakersListFragment extends BaseFragment implements SearchView.OnQ
     @Override
     public boolean onQueryTextChange(String query) {
         searchText = query;
-        speakersListAdapter.filter(query);
+        loadData();
+        speakersListAdapter.animateTo(speakers);
         Utils.displayNoResults(noSpeakersResultView, speakersRecyclerView, noSpeakersView, speakersListAdapter.getItemCount());
 
         return true;

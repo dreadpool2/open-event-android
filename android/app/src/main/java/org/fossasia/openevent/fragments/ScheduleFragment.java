@@ -2,10 +2,13 @@ package org.fossasia.openevent.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -20,15 +23,16 @@ import android.widget.TextView;
 
 import org.fossasia.openevent.OpenEventApp;
 import org.fossasia.openevent.R;
+import org.fossasia.openevent.listeners.BookmarkStatus;
 import org.fossasia.openevent.adapters.ScheduleViewPagerAdapter;
 import org.fossasia.openevent.data.Track;
-import org.fossasia.openevent.dbutils.RealmDataRepository;
+import org.fossasia.openevent.listeners.OnBookmarkSelectedListener;
 import org.fossasia.openevent.utils.ConstantStrings;
-import org.fossasia.openevent.utils.DateConverter;
 import org.fossasia.openevent.utils.SharedPreferencesUtil;
+import org.fossasia.openevent.utils.SnackbarUtil;
 import org.fossasia.openevent.utils.SortOrder;
 import org.fossasia.openevent.utils.Utils;
-import org.threeten.bp.format.DateTimeParseException;
+import org.fossasia.openevent.viewmodels.ScheduleFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,12 +41,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.disposables.CompositeDisposable;
-import timber.log.Timber;
 
 /**
  * Created by Manan Wason on 16/06/16.
  */
-public class ScheduleFragment extends BaseFragment {
+public class ScheduleFragment extends BaseFragment implements OnBookmarkSelectedListener {
 
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.tabLayout) TabLayout scheduleTabLayout;
@@ -50,6 +53,8 @@ public class ScheduleFragment extends BaseFragment {
     @BindView(R.id.filter_text) TextView filtersText;
     @BindView(R.id.close_filter) ImageView closeFilterBarButton;
     @BindView(R.id.filter_bar) LinearLayout filterBar;
+    @BindView(R.id.coordinate_layout_schedule)
+    protected CoordinatorLayout coordinatorLayoutParent;
 
     private CompositeDisposable compositeDisposable;
     private int sortType;
@@ -61,8 +66,7 @@ public class ScheduleFragment extends BaseFragment {
     private boolean isTrackSelected[];
     private List<String> selectedTracks;
     private Dialog sortDialog;
-
-    private RealmDataRepository realmRepo = RealmDataRepository.getDefaultInstance();
+    private ScheduleFragmentViewModel scheduleFragmentViewModel;
 
     @Nullable
     @Override
@@ -78,6 +82,8 @@ public class ScheduleFragment extends BaseFragment {
         sortOrder = SharedPreferencesUtil.getInt(ConstantStrings.PREF_SORT_ORDER, 0);
         selectedTracks = new ArrayList<>();
 
+        scheduleFragmentViewModel = ViewModelProviders.of(this).get(ScheduleFragmentViewModel.class);
+
         setupViewPager(viewPager);
         scheduleTabLayout.setupWithViewPager(viewPager);
 
@@ -92,31 +98,22 @@ public class ScheduleFragment extends BaseFragment {
     private void setupViewPager(final ViewPager viewPager) {
         adapter = new ScheduleViewPagerAdapter(getChildFragmentManager());
 
-        realmRepo.getEventDates()
-                .addChangeListener((eventDates, orderedCollectionChangeSet) -> {
-                    int eventDays = eventDates.size();
-                    for (int i = 0; i < eventDays; i++) {
-                        String date = eventDates.get(i).getDate();
+        scheduleFragmentViewModel.getEventDateString().observe(this, datePair -> {
+            for (int i = 0; i < datePair.size(); i++) {
+                adapter.addFragment(new DayScheduleFragment(), datePair.get(i).first, datePair.get(i).second);
+                ((DayScheduleFragment) adapter.getLast()).setOnBookmarkSelectedListener(this);
+                adapter.notifyDataSetChanged();
+            }
+        });
 
-                        try {
-                            adapter.addFragment(new DayScheduleFragment(),
-                                    DateConverter.formatDay(date), date);
-                            adapter.notifyDataSetChanged();
-                        } catch (DateTimeParseException pe) {
-                            Timber.e(pe);
-                            Timber.e("Invalid date %s in database", date);
-                        }
-                    }
-                });
+        scheduleFragmentViewModel.getTracks().observe(this, tracksList -> {
+            tracks.clear();
+            tracks.addAll(tracksList);
+            tracksNames = new String[tracks.size()];
+            isTrackSelected = new boolean[tracks.size()];
 
-        realmRepo.getTracks().addChangeListener((tracks, orderedCollectionChangeSet) -> {
-            this.tracks.clear();
-            this.tracks.addAll(tracks);
-            tracksNames = new String[this.tracks.size()];
-            isTrackSelected = new boolean[this.tracks.size()];
-
-            for(int i = 0; i < this.tracks.size(); i++){
-                tracksNames[i] = this.tracks.get(i).getName();
+            for(int i = 0; i < tracks.size(); i++){
+                tracksNames[i] = tracks.get(i).getName();
             }
         });
 
@@ -247,6 +244,14 @@ public class ScheduleFragment extends BaseFragment {
             compositeDisposable.dispose();
         if(viewPager != null && onPageChangeListener != null)
             viewPager.removeOnPageChangeListener(onPageChangeListener);
+        for (int i = 0; i < adapter.getCount(); i++)
+            ((DayScheduleFragment) adapter.getItem(i)).clearOnBookmarkSelectedListener();
     }
+
+    @Override
+    public void showSnackbar(BookmarkStatus bookmarkStatus) {
+        Snackbar snackbar = Snackbar.make(coordinatorLayoutParent, SnackbarUtil.getMessageResource(bookmarkStatus), Snackbar.LENGTH_LONG);
+        SnackbarUtil.setSnackbarAction(getContext(), snackbar, bookmarkStatus)
+                .show();    }
 }
 

@@ -79,6 +79,7 @@ import org.fossasia.openevent.fragments.ScheduleFragment;
 import org.fossasia.openevent.fragments.SpeakersListFragment;
 import org.fossasia.openevent.fragments.SponsorsFragment;
 import org.fossasia.openevent.fragments.TracksFragment;
+import org.fossasia.openevent.modules.OnImageZoomListener;
 import org.fossasia.openevent.utils.AuthUtil;
 import org.fossasia.openevent.utils.CommonTaskLoop;
 import org.fossasia.openevent.utils.ConstantStrings;
@@ -88,6 +89,7 @@ import org.fossasia.openevent.utils.NetworkUtils;
 import org.fossasia.openevent.utils.SharedPreferencesUtil;
 import org.fossasia.openevent.utils.SmoothActionBarDrawerToggle;
 import org.fossasia.openevent.utils.Utils;
+import org.fossasia.openevent.utils.ZoomableImageUtil;
 import org.fossasia.openevent.widget.DialogFactory;
 
 import java.io.IOException;
@@ -108,7 +110,7 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 import timber.log.Timber;
 
-public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCallback {
+public class MainActivity extends BaseActivity implements FeedAdapter.OpenCommentsDialogListener, OnImageZoomListener {
 
     private static final String STATE_FRAGMENT = "stateFragment";
     private static final String NAV_ITEM = "navItem";
@@ -867,11 +869,16 @@ public class MainActivity extends BaseActivity implements FeedAdapter.AdapterCal
     }
 
     @Override
-    public void onMethodCallback(List<CommentItem> commentItems) {
+    public void openCommentsDialog(List<CommentItem> commentItems) {
         CommentsDialogFragment newFragment = new CommentsDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(ConstantStrings.FACEBOOK_COMMENTS, new ArrayList<>(commentItems));
         newFragment.setArguments(bundle);
         newFragment.show(fragmentManager, "Comments");
+    }
+
+    @Override
+    public void onZoom(String imageUri) {
+        ZoomableImageUtil.showZoomableImageDialogFragment(fragmentManager, imageUri);
     }
 }

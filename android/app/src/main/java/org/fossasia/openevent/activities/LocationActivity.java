@@ -252,7 +252,6 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
             case android.R.id.home:
                 onBackPressed();
                 getSupportFragmentManager().popBackStack();
-                sessionRecyclerView.setVisibility(View.VISIBLE);
                 return true;
             case R.id.upcoming_sessions:
                 upcomingDialogBox.show();
@@ -280,6 +279,11 @@ public class LocationActivity extends BaseActivity implements SearchView.OnQuery
     @Override
     public boolean onQueryTextChange(final String query) {
         searchText = query;
+        menu.getItem(1).setEnabled(true);
+        if(!query.isEmpty()){
+            menu.getItem(1).setEnabled(false);
+        }
+
         sessionsListAdapter.filter(searchText);
         Utils.displayNoResults(noResultSessionsView, sessionRecyclerView, noSessionsView, sessionsListAdapter.getItemCount());
 

@@ -98,4 +98,5 @@
     <dimen name="upcoming_title_height">50dp</dimen>
     <dimen name="upcoming_height">70dp</dimen>
     <dimen name="upcoming_margin_left">30dp</dimen>
+    <dimen name="upcoming_margin_top">20dp</dimen>
 </resources>

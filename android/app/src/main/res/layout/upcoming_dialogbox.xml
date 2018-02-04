@@ -7,9 +7,10 @@
     android:id="@+id/upcoming_dialog">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/upcoming_title_height"
+        android:layout_height="50dp"
         android:textSize="@dimen/heading_text_size"
-        android:layout_marginLeft="@dimen/upcoming_margin_left"
+        android:text="No upcoming sessions"
+        android:padding="@dimen/padding_medium"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:id="@+id/upcoming_Session_title"/>
@@ -45,7 +46,7 @@
         android:layout_marginTop="@dimen/layout_margin_extra_small"
         android:layout_width="@dimen/upcoming_height"
         android:layout_gravity="right"
-        android:text="OK"
+        android:text="@string/ok"
         style="?android:attr/borderlessButtonStyle"
         android:textColor="@color/color_primary"
         />

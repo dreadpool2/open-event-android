@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/upcoming_dialog"
     android:layout_width="@dimen/medium_width"
     android:layout_height="wrap_content"
-    android:id="@+id/upcoming_dialog">
+    android:orientation="vertical">
+
     <TextView
+        android:id="@+id/upcoming_Session_title"
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="50dp"
         android:textSize="@dimen/heading_text_size"
         android:text="No upcoming sessions"
         android:padding="@dimen/padding_medium"
         android:textStyle="bold"
+=======
+        android:layout_height="@dimen/upcoming_title_height"
+        android:layout_marginLeft="@dimen/upcoming_margin_left"
+>>>>>>> 0dad732d809874d8a42b868deaaa50a2319791b4
         android:textColor="@color/black"
-        android:id="@+id/upcoming_Session_title"/>
+        android:textSize="@dimen/heading_text_size"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/upcoming_session_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/layout_margin_medium">
+        android:layout_marginTop="@dimen/layout_margin_medium"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/track_image_drawable"
@@ -42,13 +49,19 @@
 
     <Button
         android:id="@+id/upcoming_button"
-        android:layout_height="@dimen/upcoming_title_height"
-        android:layout_marginTop="@dimen/layout_margin_extra_small"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/upcoming_height"
+        android:layout_height="@dimen/upcoming_title_height"
         android:layout_gravity="right"
+<<<<<<< HEAD
         android:text="@string/ok"
         style="?android:attr/borderlessButtonStyle"
         android:textColor="@color/color_primary"
         />
+=======
+        android:layout_marginTop="@dimen/layout_margin_extra_small"
+        android:text="OK"
+        android:textColor="@color/color_primary" />
+>>>>>>> 0dad732d809874d8a42b868deaaa50a2319791b4
 
 </LinearLayout>

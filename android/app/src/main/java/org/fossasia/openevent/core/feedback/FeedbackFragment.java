@@ -1,4 +1,4 @@
-package org.fossasia.openevent.core.discount;
+package org.fossasia.openevent.core.feedback;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import org.fossasia.openevent.common.ui.base.BaseFragment;
 import org.fossasia.openevent.common.utils.Utils;
 import org.fossasia.openevent.core.auth.AuthUtil;
 import org.fossasia.openevent.core.auth.LoginActivity;
-import org.fossasia.openevent.data.DiscountCode;
+import org.fossasia.openevent.data.Feedback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +31,20 @@ import java.util.List;
 import butterknife.BindView;
 import timber.log.Timber;
 
-public class DiscountCodeFragment extends BaseFragment {
+public class FeedbackFragment extends BaseFragment {
 
-    @BindView(R.id.discount_refresh_layout)
+    @BindView(R.id.feedback_refresh_layout)
     protected SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.txt_no_discount_codes)
-    protected TextView noDiscountCodeView;
-    @BindView(R.id.discount_code_header)
-    protected TextView discountCodeHeader;
-    @BindView(R.id.list_discount_codes)
-    protected RecyclerView discountCodesRecyclerView;
+    @BindView(R.id.txt_no_feedback)
+    protected TextView noFeedbacksView;
+    @BindView(R.id.feedback_header)
+    protected TextView feedbackHeaderView;
+    @BindView(R.id.list_feedbacks)
+    protected RecyclerView feedbacksRecyclerView;
 
-    private List<DiscountCode> discountCodes = new ArrayList<>();
-    private DiscountCodesListAdapter discountCodesListAdapter;
-    private DiscountFragmentViewModel discountFragmentViewModel;
+    private List<Feedback> feedbackList = new ArrayList<>();
+    private FeedbacksListAdapter feedbacksListAdapter;
+    private FeedbackFragmentViewModel feedbackFragmentViewModel;
 
     @Nullable
     @Override
@@ -52,11 +53,11 @@ public class DiscountCodeFragment extends BaseFragment {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
         setUpRecyclerView();
         Utils.registerIfUrlValid(swipeRefreshLayout, this, this::refresh);
-        discountFragmentViewModel = ViewModelProviders.of(this).get(DiscountFragmentViewModel.class);
+        feedbackFragmentViewModel = ViewModelProviders.of(this).get(FeedbackFragmentViewModel.class);
         if (AuthUtil.isUserLoggedIn()) {
             if (NetworkUtils.haveNetworkConnection(getContext())) {
                 swipeRefreshLayout.setRefreshing(true);
-                downloadDiscountCodes();
+                downloadFeedbacks();
             }
             loadData();
         } else {
@@ -71,42 +72,44 @@ public class DiscountCodeFragment extends BaseFragment {
         startActivity(intent);
     }
 
-    private void downloadDiscountCodes() {
-        discountFragmentViewModel.downloadDiscountCodes().observe(this, this::onDiscountCodeDownloadDone);
+    private void downloadFeedbacks() {
+        feedbackFragmentViewModel.downloadFeedbacks().observe(this,this::onFeedbacksDownloadDone);
     }
 
     private void setUpRecyclerView() {
-        discountCodesRecyclerView.setVisibility(View.VISIBLE);
-        discountCodesListAdapter = new DiscountCodesListAdapter(discountCodes);
-        discountCodesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        discountCodesRecyclerView.setNestedScrollingEnabled(false);
-        discountCodesRecyclerView.setAdapter(discountCodesListAdapter);
-        discountCodesRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        feedbacksRecyclerView.setVisibility(View.VISIBLE);
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
+        feedbacksRecyclerView.addItemDecoration(itemDecor);
+        feedbacksListAdapter = new FeedbacksListAdapter(feedbackList);
+        feedbacksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        feedbacksRecyclerView.setNestedScrollingEnabled(false);
+        feedbacksRecyclerView.setAdapter(feedbacksListAdapter);
+        feedbacksRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void handleVisibility() {
-        if (!discountCodes.isEmpty()) {
-            discountCodeHeader.setVisibility(View.VISIBLE);
-            discountCodesRecyclerView.setVisibility(View.VISIBLE);
-            noDiscountCodeView.setVisibility(View.GONE);
+        if (!feedbackList.isEmpty()) {
+            feedbackHeaderView.setVisibility(View.VISIBLE);
+            feedbacksRecyclerView.setVisibility(View.VISIBLE);
+            noFeedbacksView.setVisibility(View.GONE);
         } else {
-            discountCodeHeader.setVisibility(View.GONE);
-            discountCodesRecyclerView.setVisibility(View.GONE);
+            feedbackHeaderView.setVisibility(View.GONE);
+            feedbacksRecyclerView.setVisibility(View.GONE);
         }
     }
 
     private void loadData() {
-        discountFragmentViewModel.getDiscountCodes().observe(this, discountCodes -> {
-            this.discountCodes.clear();
-            this.discountCodes.addAll(discountCodes);
-            discountCodesListAdapter.notifyDataSetChanged();
+        feedbackFragmentViewModel.getFeedback().observe(this, feedbacks -> {
+            feedbackList.clear();
+            feedbackList.addAll(feedbacks);
+            feedbacksListAdapter.notifyDataSetChanged();
             handleVisibility();
         });
     }
 
-    public void onDiscountCodeDownloadDone(boolean status) {
+    public void onFeedbacksDownloadDone(boolean status) {
         if (!status) {
-            Timber.d("Discount Codes Download failed");
+            Timber.d("Feedbacks Download failed");
             if (getActivity() != null && swipeRefreshLayout != null) {
                 Snackbar.make(swipeRefreshLayout, getActivity().getString(R.string.refresh_failed), Snackbar.LENGTH_LONG)
                         .setAction(R.string.retry_download, view -> refresh()).show();
@@ -119,20 +122,20 @@ public class DiscountCodeFragment extends BaseFragment {
     private void refresh() {
         if (NetworkUtils.haveNetworkConnection(getContext())) {
             if (AuthUtil.isUserLoggedIn()) {
-                downloadDiscountCodes();
+                downloadFeedbacks();
             } else {
-                redirectToLogin();
-                if (swipeRefreshLayout != null)
-                    swipeRefreshLayout.setRefreshing(false);
+                if (swipeRefreshLayout != null) {
+                    swipeRefreshLayout.setRefreshing(true);
+                }
             }
         } else {
-            onDiscountCodeDownloadDone(false);
+            onFeedbacksDownloadDone(false);
         }
     }
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.list_discount_codes;
+        return R.layout.list_feedbacks;
     }
 
     @Override
